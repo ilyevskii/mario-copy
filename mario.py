@@ -94,7 +94,9 @@ class Mario(sprite.Sprite):
 
             if sprite.collide_rect(self, mob):
 
-                if not self.onGround and self.rect.bottom >= mob.rect.top:
+                if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
+                    print(self.rect.bottom)
+                    print(mob.rect.top)
                     sleep(0.25)
                     mobs.remove(mob)
                 else:
