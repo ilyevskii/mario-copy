@@ -18,7 +18,7 @@ class Mob(sprite.Sprite):
         self.x_speed = MOVE_SPEED
         self.y_speed = 0
 
-    def update(self, platforms):
+    def update(self, platforms, sewers):
         # Изменение позиции моба
 
         if not self.onGround:
@@ -27,38 +27,49 @@ class Mob(sprite.Sprite):
         self.onGround = False
 
         self.rect.centery += self.y_speed
-        self.check_for_collide(0, self.y_speed, platforms)
+        self.check_for_collide(0, self.y_speed, platforms, sewers)
 
         self.rect.centerx += self.x_speed
-        self.check_for_collide(self.x_speed, 0, platforms)
+        self.check_for_collide(self.x_speed, 0, platforms, sewers)
 
 
-    def check_for_collide(self, x_speed, y_speed, platforms):
-        #Проверка на столкновения с блоками
+    def check_for_collide(self, x_speed, y_speed, platforms, sewers):
+        # Проверка на столкновения с блоками
         for block in platforms:
-
             if sprite.collide_rect(self, block):
+                get_collide(self, block, x_speed, y_speed)
 
-                if x_speed > 0:
-                    self.rect.right = block.rect.left
-                    self.x_speed = -self.x_speed
-                    self.image = LEFT_POSE
+        # Проверка на столкновения с трубами
+        for sewer in sewers:
+            if sprite.collide_rect(self, sewer):
+                get_collide(self, sewer, x_speed, y_speed)
 
-                if x_speed < 0:
-                    self.rect.left = block.rect.right
-                    self.x_speed = -self.x_speed
-                    self.image = RIGHT_POSE
 
-                if y_speed > 0:
-                    self.rect.bottom = block.rect.top
-                    self.onGround = True
-                    self.y_speed = 0
 
-def update_mobs(mobs, platforms):
+
+def get_collide(mob, block, x_speed, y_speed):
+    if x_speed > 0:
+        mob.rect.right = block.rect.left
+        mob.x_speed = -mob.x_speed
+        mob.image = LEFT_POSE
+
+    if x_speed < 0:
+        mob.rect.left = block.rect.right
+        mob.x_speed = -mob.x_speed
+        mob.image = RIGHT_POSE
+
+    if y_speed > 0:
+        mob.rect.bottom = block.rect.top
+        mob.onGround = True
+        mob.y_speed = 0
+
+def update_mobs(mobs, platforms, sewers):
     #Обновляем список мобов
 
     for mob in mobs:
-        mob.update(platforms)
+        mob.update(platforms, sewers)
+
+
 
 
 

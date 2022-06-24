@@ -3,6 +3,8 @@ from Mob import Mob
 
 PLATFORM_WIDTH = 40
 PLATFORM_HEIGHT = 40
+SEWER_WIDTH = 86
+SEWER_HEIGHT = 100
 
 class Platform(sprite.Sprite):
     #Базовый класс платформа (кирпичный блок)
@@ -17,15 +19,20 @@ class Special_Platform(Platform):
         Platform.__init__(self, x, y)
         self.image = image.load("images/special_block.png")
         self.type = type
-        self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 
 class Coin(Platform):
     #Монетка
     def __init__(self, x, y):
-        sprite.Sprite.__init__(self)
+        Platform.__init__(self, x, y)
         self.image = image.load("images/coin.png")
-        self.rect = Rect(x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 
+class Sewer(Platform):
+    #Труба
+    def __init__(self, x, y, status):
+        Platform.__init__(self, x, y)
+        self.image = image.load("images/sewer.png")
+        self.status = status
+        self.rect = Rect(x, y, SEWER_WIDTH, SEWER_HEIGHT)
 
 
 def get_sprites(coordinates, type):
@@ -52,6 +59,8 @@ def get_sprites(coordinates, type):
                 sprite = Special_Platform(x, y, line[2])
             elif type == "mobs":
                 sprite = Mob(x, y)
+            elif type == "sewer":
+                sprite = Sewer(x, y, line[2])
             else:
                 sprite = Coin(x, y)
 
@@ -68,3 +77,11 @@ def get_needed_platform(temp_blocks, blocks):
     for i in temp_blocks:
         if i not in blocks:
             return i
+
+def get_status_from_sewer(x, sewers):
+    # Функция, возращающая статус трубы - является она телепортом на скрытый уровень или нет. Если является -
+    # возвращается номер скрытого уровня
+
+    for i in sewers:
+        if i.rect.left < x and i.rect.right > x:
+            return i.status
