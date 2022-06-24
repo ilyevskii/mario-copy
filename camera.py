@@ -7,7 +7,6 @@ class Camera(object):
         self.state = Rect(0, 0, width, height)
 
     def apply(self, target):
-        print(target.rect.topright[1])
         return target.rect.move(self.state.topleft)
 
     def update(self, target):
@@ -17,11 +16,11 @@ class Camera(object):
 def camera_configure(camera, target_rect):
     l, t, _, _ = target_rect
     _, _, w, h = camera
-    l, t = -l + 1920 / 2, -t + 720
+    l, t = -l + 1280 / 2, -t + 720
 
     l = min(0, l)  # Не движемся дальше левой границы
-    l = max(-(camera.width - 1920), l)  # Не движемся дальше правой границы
-    t = max(-(camera.height - 720), t)  # Не движемся дальше нижней границы
+    l = max(-1280, l)  # Не движемся дальше правой границы
+    t = max(-720, t)  # Не движемся дальше нижней границы
     t = min(0, t)  # Не движемся дальше верхней границы
 
     return Rect(l, t, w, h)

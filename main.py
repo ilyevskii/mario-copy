@@ -1,44 +1,42 @@
 import pygame
 from events import check_for_events
 from mario import Mario
-from platforms import get_sprites, Platform, get_needed_platform
+from platforms import get_sprites, Platform, get_needed_platform, Coin
 from Mob import update_mobs, Mob
-from camera import Camera
-from camera import camera_configure
+from camera import Camera, camera_configure
 
 timer = pygame.time.Clock()
-BG_WIDTH = 1920
+BG_WIDTH = 1280
 BG_HEIGHT = 720
 BG = pygame.image.load("images/background.png")
 
 # Задаем уровень
 platforms_coordinates = [
-    # x, y, Количество блоков, направление отрисовки
-    [0, 0, 32, "hor"],
-    [0, 680, 70, "hor"],
-    [0, 0, 20, "ver"],
-    [200, 300, 7, "hor"],
-    [600, 500, 3, "hor"],
-    [1160, 400, 3, "hor"],
-    [1200, 600, 2, "ver"],
-    # [1920, 0, 36, "ver"]
-]
+            #x, y, Количество блоков, направление отрисовки
+            [0, 0, 64, "hor"],
+            [0, 680, 64, "hor"],
+            [0, 0, 20, "ver"],
+            [2520, 0, 20, "ver"],
+            [200, 300, 7, "hor"],
+            [600, 500, 3, "hor"],
+            [1160, 400, 3, "hor"],
+            [1200, 600, 2, "ver"]
+        ]
 
 coins_coordinates = [
-    # x, y - координаты монетки
-    [360, 640], [625, 460], [250, 260]
+        #x, y - координаты монетки
+        [360, 640], [625, 460], [250, 260]
 ]
 
 mobs_coordinates = [
-    # x, y - координаты моба
-    [650, 450]
+        #x, y - координаты моба
+        [650, 450]
 ]
 
 special_blocks_coordinates = [
-    # x, y, Количество блоков, направление отрисовки
-    [1000, 550, "mob"]
+        #x, y, тип объекта, который появится (mob или coin)
+        [1000, 550, "mob"]
 ]
-
 
 def change_entities(entities, tmp_lst, lst):
     # Функция, удаляющая ненужные спрайты (например, монетка, если ее собрали)
@@ -47,10 +45,10 @@ def change_entities(entities, tmp_lst, lst):
         if i not in lst:
             entities.remove(i)
 
-
 def run():
+
     pygame.init()
-    screen = pygame.display.set_mode((1280, BG_HEIGHT))
+    screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
     pygame.display.set_caption("Anti Mario")
     mario = Mario(50, 50)
 
@@ -64,7 +62,7 @@ def run():
     entities = pygame.sprite.Group()
     entities.add(mario, platforms, mobs, coins, special_platforms)
 
-    # создания камеру
+    # Создание камеры
     total_level_width = BG_WIDTH ** 2 / 40
     total_level_height = BG_HEIGHT ** 2 / 40
 
@@ -72,7 +70,7 @@ def run():
 
     while True:
 
-        screen.blit(BG, (0, 0))
+        screen.blit(BG, (0,0))
 
         # Создаем временные списки монет, мобов и спец.платформ, чтобы отслеживать взаимодействие с ними
         tmp_coins = list(coins)
@@ -98,6 +96,8 @@ def run():
             y = block.rect.y
             if block.type == "mob":
                 mob = Mob(x, y - 40)
+            elif block.type == "coin":
+                mob = Coin(x, y - 40)
             else:
                 mob = None
             block = Platform(x, y)
@@ -106,7 +106,6 @@ def run():
             entities.add(block, mob)
             change_entities(entities, tmp_spec_platforms, special_platforms)
 
-        # entities.draw(screen)
         camera.update(mario)
         for e in entities:
             screen.blit(e.image, camera.apply(e))
@@ -114,7 +113,7 @@ def run():
         pygame.display.update()
         timer.tick(60)
 
-        # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
+        #Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
             print("DEAD")
             entities = pygame.sprite.Group()

@@ -1,10 +1,10 @@
 from pygame import *
 from time import sleep
 
-WIDTH = 34
-HEIGHT = 50
+WIDTH = 41
+HEIGHT = 60
 MOVE_SPEED = 3.5
-JUMP_POWER = 10
+JUMP_POWER = 11
 GRAVITY = 0.35
 LEFT_POSE = image.load("images/marioLeft.png")
 RIGHT_POSE = image.load("images/marioRight.png")
