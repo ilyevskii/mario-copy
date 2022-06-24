@@ -1,7 +1,7 @@
 import pygame
 from events import check_for_events
 from mario import Mario
-from platforms import get_sprites, Platform, get_needed_platform
+from platforms import get_sprites, Platform, get_needed_platform, Coin
 from Mob import update_mobs, Mob
 from camera import Camera, camera_configure
 
@@ -34,7 +34,7 @@ mobs_coordinates = [
 ]
 
 special_blocks_coordinates = [
-        #x, y, Количество блоков, направление отрисовки
+        #x, y, тип объекта, который появится (mob или coin)
         [1000, 550, "mob"]
 ]
 
@@ -96,6 +96,8 @@ def run():
             y = block.rect.y
             if block.type == "mob":
                 mob = Mob(x, y - 40)
+            elif block.type == "coin":
+                mob = Coin(x, y - 40)
             else:
                 mob = None
             block = Platform(x, y)
