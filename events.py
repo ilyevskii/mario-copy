@@ -2,12 +2,12 @@ from pygame import *
 import pygame
 import sys
 
-left = right = up = False
+left = right = up = down = False
 
 def check_for_events():
     #Обработка событий
 
-    global left, right, up
+    global left, right, up, down
     for event in pygame.event.get():
 
         #Клик на крестик в правом верхнем углу
@@ -22,6 +22,8 @@ def check_for_events():
                 right = True
             if event.key == K_SPACE or event.key == K_w:
                 up = True
+            if event.key == K_s or event.key == K_DOWN:
+                down = True
 
         #Остановка движения (кнопку отпустили)
         elif event.type == KEYUP:
@@ -32,9 +34,11 @@ def check_for_events():
                 right = False
             if event.key == K_SPACE or event.key == K_w:
                 up = False
+            if event.key == K_s or event.key == K_DOWN:
+                down = False
 
 
     #Возвращаем переменные, отвечающие за направление движения или его отсутствие
-    return [left, right, up]
+    return [left, right, up, down]
 
 
