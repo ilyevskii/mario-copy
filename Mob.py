@@ -1,7 +1,7 @@
 from pygame import *
 
-WIDTH = 35
-HEIGHT = 40
+WIDTH = 39
+HEIGHT = 45
 MOVE_SPEED = 3.5
 GRAVITY = 0.525
 LEFT_POSE = image.load("images/mobLeft.png")
