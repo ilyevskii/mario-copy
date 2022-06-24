@@ -3,6 +3,7 @@ from events import check_for_events
 from mario import Mario
 from platforms import get_sprites, Platform, get_needed_platform
 from Mob import update_mobs, Mob
+from camera import Camera, camera_configure
 
 timer = pygame.time.Clock()
 BG_WIDTH = 1280
@@ -12,9 +13,10 @@ BG = pygame.image.load("images/background.png")
 # Задаем уровень
 platforms_coordinates = [
             #x, y, Количество блоков, направление отрисовки
-            [0, 0, 32, "hor"],
-            [0, 680, 32, "hor"],
+            [0, 0, 64, "hor"],
+            [0, 680, 64, "hor"],
             [0, 0, 20, "ver"],
+            [2520, 0, 20, "ver"],
             [200, 300, 7, "hor"],
             [600, 500, 3, "hor"],
             [1160, 400, 3, "hor"],
@@ -37,8 +39,8 @@ special_blocks_coordinates = [
 ]
 
 def change_entities(entities, tmp_lst, lst):
-    #Функция, удаляющая ненужные спрайты (например, монетка, если ее собрали)
-    #tmp_lst - лист спрайтов до сбора монеты, lst - после (т.е. лист без собранной монеты)
+    # Функция, удаляющая ненужные спрайты (например, монетка, если ее собрали)
+    # tmp_lst - лист спрайтов до сбора монеты, lst - после (т.е. лист без собранной монеты)
     for i in tmp_lst:
         if i not in lst:
             entities.remove(i)
@@ -50,15 +52,21 @@ def run():
     pygame.display.set_caption("Anti Mario")
     mario = Mario(50, 50)
 
-    #Создаем списки соответствующих спрайтов и мобов
+    # Создаем списки соответствующих спрайтов и мобов
     platforms = get_sprites(platforms_coordinates, "simple")
     special_platforms = get_sprites(special_blocks_coordinates, "special")
     coins = get_sprites(coins_coordinates, "coins")
     mobs = get_sprites(mobs_coordinates, "mobs")
 
-    #Создаем одну большую группу спрайтов для общей отрисовки
+    # Создаем одну большую группу спрайтов для общей отрисовки
     entities = pygame.sprite.Group()
     entities.add(mario, platforms, mobs, coins, special_platforms)
+
+    # Создание камеры
+    total_level_width = BG_WIDTH ** 2 / 40
+    total_level_height = BG_HEIGHT ** 2 / 40
+
+    camera = Camera(camera_configure, total_level_width, total_level_height)
 
     while True:
 
@@ -96,7 +104,10 @@ def run():
             entities.add(block, mob)
             change_entities(entities, tmp_spec_platforms, special_platforms)
 
-        entities.draw(screen)
+        camera.update(mario)
+        for e in entities:
+            screen.blit(e.image, camera.apply(e))
+
         pygame.display.update()
         timer.tick(60)
 
