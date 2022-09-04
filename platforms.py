@@ -3,7 +3,7 @@ from Mob import Mob
 
 PLATFORM_WIDTH = 40
 PLATFORM_HEIGHT = 40
-SEWER_WIDTH = 86
+SEWER_WIDTH = 80
 SEWER_HEIGHT = 100
 
 class Platform(sprite.Sprite):
@@ -34,6 +34,11 @@ class Sewer(Platform):
         self.status = status
         self.rect = Rect(x, y, SEWER_WIDTH, SEWER_HEIGHT)
 
+# class Mushroom(Platform):
+#     #грибы
+#     def __init__(self, x, y):
+#         Platform.__init__(self, x, y)
+#         self.image = image.load()
 
 def get_sprites(coordinates, type):
     #Получение структуры уровня

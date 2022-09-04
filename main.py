@@ -11,37 +11,53 @@ BG_HEIGHT = 720
 BG = pygame.image.load("images/background.png")
 
 # Задаем уровень
+# platforms_coordinates = [
+#             #x, y, Количество блоков, направление отрисовки
+#             [0, 0, 64, "hor"],
+#             [0, 680, 64, "hor"],
+#             [0, 0, 20, "ver"],
+#             [2520, 0, 20, "ver"],
+#             [200, 300, 7, "hor"],
+#             [600, 500, 3, "hor"],
+#             [1160, 400, 3, "hor"],
+#             [1200, 600, 2, "ver"]
+# ]
 platforms_coordinates = [
-            #x, y, Количество блоков, направление отрисовки
-            [0, 0, 64, "hor"],
-            [0, 680, 64, "hor"],
-            [0, 0, 20, "ver"],
-            [2520, 0, 20, "ver"],
-            [200, 300, 7, "hor"],
-            [600, 500, 3, "hor"],
-            [1160, 400, 3, "hor"],
-            [1200, 600, 2, "ver"]
-        ]
+    [0, 640, 69, "hor"],
+    [0, 680, 69, "hor"],
+    [2840, 640, 16, "hor"],
+    [2840, 680, 16, "hor"],
+    [3600, 640, 109, "hor"],
+    [3600, 680, 109, "hor"],
+    [800, 480, 1, "hor"],
+    [880, 480, 1, "hor"],
+    [960, 480, 1, "hor"]
+
+]
 
 coins_coordinates = [
-        #x, y - координаты монетки
-        [360, 640], [625, 460], [250, 260]
+    # x, y - координаты монетки
+    [360, 640], [625, 460], [250, 260]
 ]
 
 mobs_coordinates = [
-        #x, y - координаты моба
-        [650, 450]
+    # x, y - координаты моба
+    [650, 450]
 ]
 
 special_blocks_coordinates = [
-        #x, y, тип объекта, который появится (mob или coin)
-        [1000, 550, "mob"]
+    # x, y, тип объекта, который появится (mob или coin)
+    [640, 480, "coin"],
+    [840, 480, "coin"],
+    [920, 480, "coin"],
+    [880, 320, "coin"]
 ]
 
 sewer_coordinates = [
-        #x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
-        [400, 580, "none"], [1700, 580, "lvl1"]
+    # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
+     [400, 600, "none"], [1700, 580, "lvl1"]
 ]
+
 
 def change_entities(entities, tmp_lst, lst):
     # Функция, удаляющая ненужные спрайты (например, монетка, если ее собрали)
@@ -50,8 +66,8 @@ def change_entities(entities, tmp_lst, lst):
         if i not in lst:
             entities.remove(i)
 
-def run():
 
+def run():
     pygame.init()
     screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
     pygame.display.set_caption("Anti Mario")
@@ -127,7 +143,7 @@ def run():
         pygame.display.update()
         timer.tick(60)
 
-        #Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
+        # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
             status = "dead"
 
@@ -139,4 +155,3 @@ if status == "lvl1":
     print("lvl1")
 elif status == "dead":
     print("dead")
-
