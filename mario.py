@@ -32,6 +32,10 @@ class Mario(sprite.Sprite):
         movingRight = moves[1]
         movingUp = moves[2]
 
+        # Проверка, упал ли вниз карты
+        if 800 < self.rect.bottom < 811:
+            self.lives -= 1
+
         if movingRight:
             self.x_speed = MOVE_SPEED
             self.image = RIGHT_POSE
@@ -59,6 +63,20 @@ class Mario(sprite.Sprite):
         self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs)
 
     def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs):
+
+        # Проверка на столкновения с блоками с вопросами
+        for block in spec_platforms:
+
+            if sprite.collide_rect(self, block):
+
+                if not self.onGround and self.rect.bottom >= block.rect.top + 10:
+                    self.y_speed = -1
+                    spec_platforms.remove(block)
+                else:
+                    self.rect.bottom = block.rect.top
+                    self.onGround = True
+                    self.y_speed = 0
+
         # Проверка на столкновения с блоками
         for block in platforms:
 
@@ -69,6 +87,7 @@ class Mario(sprite.Sprite):
 
             if sprite.collide_rect(self, block):
                 get_collide(self, block, x_speed, y_speed)
+
         # Проверка на столкновения с монетами
         for coin in coins:
 
@@ -88,19 +107,6 @@ class Mario(sprite.Sprite):
                 else:
                     if self.lives > 0:
                         self.lives -= 1
-
-        # Проверка на столкновения с блоками с вопросами
-        for block in spec_platforms:
-
-            if sprite.collide_rect(self, block):
-
-                if not self.onGround and self.rect.top >= block.rect.bottom - 20:
-                    self.y_speed = -1
-                    spec_platforms.remove(block)
-                else:
-                    self.rect.bottom = block.rect.top
-                    self.onGround = True
-                    self.y_speed = 0
 
         # Проверка на столкновения с трубами
         for sewer in sewers:

@@ -154,7 +154,7 @@ def run():
                     status = tmp_status
 
         mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs)
-        update_mobs(mobs, platforms, sewers)
+        update_mobs(mobs, platforms, sewers, stairs)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
         # взаимодействовали. В списке tmp_coins эта монета ещё есть. В ифе удаляем монету из спрайтов
@@ -170,15 +170,16 @@ def run():
             block = get_needed_platform(tmp_spec_platforms, special_platforms)
             x = block.rect.x
             y = block.rect.y
+            mob = None
             if block.type == "mob":
                 mob = Mob(x, y - 40)
+                mobs.append(mob)
             elif block.type == "coin":
                 mob = Coin(x, y - 40)
-            else:
-                mob = None
+                coins.append(mob)
+
             block = Platform(x, y)
             platforms.append(block)
-            mobs.append(mob)
             entities.add(block, mob)
             change_entities(entities, tmp_spec_platforms, special_platforms)
 

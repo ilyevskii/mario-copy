@@ -18,7 +18,7 @@ class Mob(sprite.Sprite):
         self.x_speed = MOVE_SPEED
         self.y_speed = 0
 
-    def update(self, platforms, sewers):
+    def update(self, platforms, sewers, stairs):
         # Изменение позиции моба
 
         if not self.onGround:
@@ -27,13 +27,13 @@ class Mob(sprite.Sprite):
         self.onGround = False
 
         self.rect.centery += self.y_speed
-        self.check_for_collide(0, self.y_speed, platforms, sewers)
+        self.check_for_collide(0, self.y_speed, platforms, sewers, stairs)
 
         self.rect.centerx += self.x_speed
-        self.check_for_collide(self.x_speed, 0, platforms, sewers)
+        self.check_for_collide(self.x_speed, 0, platforms, sewers, stairs)
 
 
-    def check_for_collide(self, x_speed, y_speed, platforms, sewers):
+    def check_for_collide(self, x_speed, y_speed, platforms, sewers, stairs):
         # Проверка на столкновения с блоками
         for block in platforms:
             if sprite.collide_rect(self, block):
@@ -43,6 +43,11 @@ class Mob(sprite.Sprite):
         for sewer in sewers:
             if sprite.collide_rect(self, sewer):
                 get_collide(self, sewer, x_speed, y_speed)
+
+        # Проверка на столкновения с лестницами
+        for stair in stairs:
+            if sprite.collide_rect(self, stair):
+                get_collide(self, stair, x_speed, y_speed)
 
 
 
@@ -63,11 +68,11 @@ def get_collide(mob, block, x_speed, y_speed):
         mob.onGround = True
         mob.y_speed = 0
 
-def update_mobs(mobs, platforms, sewers):
+def update_mobs(mobs, platforms, sewers, stairs):
     #Обновляем список мобов
 
     for mob in mobs:
-        mob.update(platforms, sewers)
+        mob.update(platforms, sewers, stairs)
 
 
 
