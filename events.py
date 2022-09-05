@@ -2,9 +2,11 @@ from pygame import *
 import pygame
 import sys
 
+
 left = right = up = down = False
 
-def check_for_events():
+
+def check_for_events(main_menu, screen, run):
     #Обработка событий
 
     global left, right, up, down
@@ -24,6 +26,10 @@ def check_for_events():
                 up = True
             if event.key == K_s or event.key == K_DOWN:
                 down = True
+
+            if event.key == K_ESCAPE:
+                main_menu(screen=screen, run=run)
+
 
         #Остановка движения (кнопку отпустили)
         elif event.type == KEYUP:
