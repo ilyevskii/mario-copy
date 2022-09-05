@@ -4,11 +4,12 @@ from mario import Mario
 from platforms import get_sprites, Platform, get_needed_platform, Coin, get_status_from_sewer
 from Mob import update_mobs, Mob
 from camera import Camera, camera_configure
+from menu import *
 
 timer = pygame.time.Clock()
 BG_WIDTH = 1280
 BG_HEIGHT = 720
-BG = pygame.image.load("images/background.png")
+screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 
 # Задаем уровень
 # platforms_coordinates = [
@@ -85,7 +86,7 @@ def change_entities(entities, tmp_lst, lst):
 
 def run():
     pygame.init()
-    screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
+    BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
     mario = Mario(50, 50)
 
@@ -166,8 +167,4 @@ def run():
     return status
 
 
-status = run()
-if status == "lvl1":
-    print("lvl1")
-elif status == "dead":
-    print("dead")
+main_menu(screen=screen, run=run)
