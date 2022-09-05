@@ -32,6 +32,10 @@ class Mario(sprite.Sprite):
         movingRight = moves[1]
         movingUp = moves[2]
 
+        # Проверка, упал ли вниз карты
+        if 800 < self.rect.bottom < 811:
+            self.lives -= 1
+
         if movingRight:
             self.x_speed = MOVE_SPEED
             self.image = RIGHT_POSE
@@ -83,6 +87,7 @@ class Mario(sprite.Sprite):
 
             if sprite.collide_rect(self, block):
                 get_collide(self, block, x_speed, y_speed)
+
         # Проверка на столкновения с монетами
         for coin in coins:
 
