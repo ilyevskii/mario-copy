@@ -30,7 +30,6 @@ def check_for_events(pause, screen, run):
             if event.key == K_ESCAPE:
                 pause(screen=screen, run=run)
 
-
         #Остановка движения (кнопку отпустили)
         elif event.type == KEYUP:
 

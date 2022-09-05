@@ -1,4 +1,3 @@
-import pygame
 from events import check_for_events
 from mario import Mario
 from platforms import get_sprites, Platform, get_needed_platform, Coin, get_status_from_sewer
