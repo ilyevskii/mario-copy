@@ -20,7 +20,7 @@ def check_for_events():
                 left = True
             if event.key == K_d or event.key == K_RIGHT:
                 right = True
-            if event.key == K_UP or event.key == K_w:
+            if event.key == K_UP or event.key == K_w or event.key == K_SPACE:
                 up = True
             if event.key == K_s or event.key == K_DOWN:
                 down = True
@@ -32,7 +32,7 @@ def check_for_events():
                 left = False
             if event.key == K_d or event.key == K_RIGHT:
                 right = False
-            if event.key == K_UP or event.key == K_w:
+            if event.key == K_UP or event.key == K_w or event.key == K_SPACE:
                 up = False
             if event.key == K_s or event.key == K_DOWN:
                 down = False
