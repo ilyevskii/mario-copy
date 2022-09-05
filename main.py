@@ -11,37 +11,98 @@ BG_HEIGHT = 720
 BG = pygame.image.load("images/background.png")
 
 # Задаем уровень
+# platforms_coordinates = [
+#             #x, y, Количество блоков, направление отрисовки
+#             [0, 0, 64, "hor"],
+#             [0, 680, 64, "hor"],
+#             [0, 0, 20, "ver"],
+#             [2520, 0, 20, "ver"],
+#             [200, 300, 7, "hor"],
+#             [600, 500, 3, "hor"],
+#             [1160, 400, 3, "hor"],
+#             [1200, 600, 2, "ver"]
+# ]
 platforms_coordinates = [
-            #x, y, Количество блоков, направление отрисовки
-            [0, 0, 64, "hor"],
-            [0, 680, 64, "hor"],
-            [0, 0, 20, "ver"],
-            [2520, 0, 20, "ver"],
-            [200, 300, 7, "hor"],
-            [600, 500, 3, "hor"],
-            [1160, 400, 3, "hor"],
-            [1200, 600, 2, "ver"]
-        ]
+    [0, 640, 69, "hor"],
+    [0, 680, 69, "hor"],
+    [2840, 640, 16, "hor"],
+    [2840, 680, 16, "hor"],
+    [3600, 640, 109, "hor"],
+    [3600, 680, 109, "hor"],
+    [800, 480, 1, "hor"],
+    [880, 480, 1, "hor"],
+    [960, 480, 1, "hor"],
+    [3080, 480, 1, "hor"],
+    [3160, 480, 1, "hor"],
+    [3760, 480, 1, "hor"],
+    [4000, 480, 2, "hor"],
+    [3200, 320, 8, "hor"],
+    [3640, 320, 3, "hor"],
+    [4720, 480, 1, "hor"],
+    [4840, 320, 3, "hor"],
+    [5080, 320, 1, "hor"],
+    [5200, 320, 1, "hor"],
+    [5120, 480, 2, "hor"]
+
+]
+stairs_coordinate = [
+    [5320, 600], [5360, 600], [5400, 600], [5440, 600],
+    [5360, 560], [5400, 560], [5440, 560],
+    [5400, 520], [5440, 520],
+    [5440, 480],
+    [5560, 600], [5600, 600], [5640, 600], [5680, 600],
+    [5560, 560], [5600, 560], [5640, 560],
+    [5560, 520], [5600, 520],
+    [5560, 480],
+    [5880, 600], [5920, 600], [5960, 600], [6000, 600], [6040, 600],
+    [5920, 560], [5960, 560], [6000, 560], [6040, 560],
+    [5960, 520], [6000, 520], [6040, 520],
+    [6000, 480], [6040, 480],
+    [6160, 600], [6200, 600], [6240, 600], [6280, 600],
+    [6160, 560], [6200, 560], [6240, 560],
+    [6160, 520], [6200, 520],
+    [6160, 480],
+    [7160, 600], [7200, 600], [7240, 600], [7280, 600], [7320, 600], [7360, 600], [7400, 600], [7440, 600], [7480, 600],
+    [7200, 560], [7240, 560], [7280, 560], [7320, 560], [7360, 560], [7400, 560], [7440, 560], [7480, 560],
+    [7240, 520], [7280, 520], [7320, 520], [7360, 520], [7400, 520], [7440, 520], [7480, 520],
+    [7280, 480], [7320, 480], [7360, 480], [7400, 480], [7440, 480], [7480, 480],
+    [7320, 440], [7360, 440], [7400, 440], [7440, 440], [7480, 440],
+    [7360, 400], [7400, 400], [7440, 400], [7480, 400],
+    [7400, 360], [7440, 360], [7480, 360],
+    [7440, 320], [7480, 320],
+
+]
 
 coins_coordinates = [
-        #x, y - координаты монетки
-        [360, 640], [625, 460], [250, 260]
+    # x, y - координаты монетки
+    [360, 640], [625, 460], [250, 260]
 ]
 
 mobs_coordinates = [
-        #x, y - координаты моба
-        [650, 450]
+    # x, y - координаты моба
+    [650, 450]
 ]
 
 special_blocks_coordinates = [
-        #x, y, тип объекта, который появится (mob или coin)
-        [1000, 550, "mob"]
+    # x, y, тип объекта, который появится (mob или coin)
+    [640, 480, "coin"],
+    [840, 480, "coin"],
+    [920, 480, "coin"],
+    [880, 320, "coin"],
+    [3120, 480, "coin"],
+    [3760, 320, "coin"],
+    [4240, 480, "mob"],
+    [4360, 480, "coin"],
+    [4480, 480, "coin"],
+    [5120, 320, "coin"],
+    [5160, 320, "coin"]
 ]
 
 sewer_coordinates = [
-        #x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
-        [400, 580, "none"], [1700, 580, "lvl1"]
+    # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
+    [400, 600, "none"], [1700, 580, "lvl1"]
 ]
+
 
 def change_entities(entities, tmp_lst, lst):
     # Функция, удаляющая ненужные спрайты (например, монетка, если ее собрали)
@@ -50,8 +111,8 @@ def change_entities(entities, tmp_lst, lst):
         if i not in lst:
             entities.remove(i)
 
-def run():
 
+def run():
     pygame.init()
     screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
     pygame.display.set_caption("Anti Mario")
@@ -63,10 +124,11 @@ def run():
     coins = get_sprites(coins_coordinates, "coins")
     mobs = get_sprites(mobs_coordinates, "mobs")
     sewers = get_sprites(sewer_coordinates, "sewer")
+    stairs = get_sprites(stairs_coordinate, "stair")
 
     # Создаем одну большую группу спрайтов для общей отрисовки
     entities = pygame.sprite.Group()
-    entities.add(mario, platforms, mobs, coins, special_platforms, sewers)
+    entities.add(mario, platforms, mobs, coins, special_platforms, sewers, stairs)
 
     # Создание камеры
     total_level_width = BG_WIDTH ** 2 / 40
@@ -91,7 +153,7 @@ def run():
                 if tmp_status != "none":
                     status = tmp_status
 
-        mario.update(events, platforms, coins, mobs, special_platforms, sewers)
+        mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs)
         update_mobs(mobs, platforms, sewers)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
@@ -108,15 +170,16 @@ def run():
             block = get_needed_platform(tmp_spec_platforms, special_platforms)
             x = block.rect.x
             y = block.rect.y
+            mob = None
             if block.type == "mob":
                 mob = Mob(x, y - 40)
+                mobs.append(mob)
             elif block.type == "coin":
                 mob = Coin(x, y - 40)
-            else:
-                mob = None
+                coins.append(mob)
+
             block = Platform(x, y)
             platforms.append(block)
-            mobs.append(mob)
             entities.add(block, mob)
             change_entities(entities, tmp_spec_platforms, special_platforms)
 
@@ -127,7 +190,7 @@ def run():
         pygame.display.update()
         timer.tick(60)
 
-        #Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
+        # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
             status = "dead"
 
@@ -139,4 +202,3 @@ if status == "lvl1":
     print("lvl1")
 elif status == "dead":
     print("dead")
-

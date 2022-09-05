@@ -9,6 +9,7 @@ GRAVITY = 0.35
 LEFT_POSE = image.load("images/marioLeft.png")
 RIGHT_POSE = image.load("images/marioRight.png")
 
+
 class Mario(sprite.Sprite):
 
     def __init__(self, x, y):
@@ -23,10 +24,10 @@ class Mario(sprite.Sprite):
         self.coins = 0
         self.lives = 1
 
-    def update(self, moves, platforms, coins, mobs, spec_platforms, sewers):
+    def update(self, moves, platforms, coins, mobs, spec_platforms, sewers, stairs):
         # Изменение позиции персонажа
 
-        #moves - результат работы файла events.
+        # moves - результат работы файла events.
         movingLeft = moves[0]
         movingRight = moves[1]
         movingUp = moves[2]
@@ -52,47 +53,19 @@ class Mario(sprite.Sprite):
         self.onGround = False
 
         self.rect.centery += self.y_speed
-        self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers)
+        self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs)
 
         self.rect.centerx += self.x_speed
-        self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers)
+        self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs)
 
+    def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs):
 
-    def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers):
-        #Проверка на столкновения с блоками
-        for block in platforms:
-
-            if sprite.collide_rect(self, block):
-
-                get_collide(self, block, x_speed, y_speed)
-
-
-        # Проверка на столкновения с монетами
-        for coin in coins:
-
-            if sprite.collide_rect(self, coin):
-                self.coins += 1
-                coins.remove(coin)
-
-        #Проверка на столкновения с мобами
-        for mob in mobs:
-
-            if sprite.collide_rect(self, mob):
-
-                if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
-
-                    sleep(0.25)
-                    mobs.remove(mob)
-                else:
-                    if self.lives > 0:
-                        self.lives -= 1
-
-        #Проверка на столкновения с блоками с вопросами
+        # Проверка на столкновения с блоками с вопросами
         for block in spec_platforms:
 
             if sprite.collide_rect(self, block):
 
-                if not self.onGround and self.rect.top >= block.rect.bottom - 20:
+                if not self.onGround and self.rect.bottom >= block.rect.top + 10:
                     self.y_speed = -1
                     spec_platforms.remove(block)
                 else:
@@ -100,7 +73,37 @@ class Mario(sprite.Sprite):
                     self.onGround = True
                     self.y_speed = 0
 
-        #Проверка на столкновения с трубами
+        # Проверка на столкновения с блоками
+        for block in platforms:
+
+            if sprite.collide_rect(self, block):
+                get_collide(self, block, x_speed, y_speed)
+
+        for block in stairs:
+
+            if sprite.collide_rect(self, block):
+                get_collide(self, block, x_speed, y_speed)
+        # Проверка на столкновения с монетами
+        for coin in coins:
+
+            if sprite.collide_rect(self, coin):
+                self.coins += 1
+                coins.remove(coin)
+
+        # Проверка на столкновения с мобами
+        for mob in mobs:
+
+            if sprite.collide_rect(self, mob):
+
+                if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
+
+                    # sleep(0.25)
+                    mobs.remove(mob)
+                else:
+                    if self.lives > 0:
+                        self.lives -= 1
+
+        # Проверка на столкновения с трубами
         for sewer in sewers:
 
             if sprite.collide_rect(self, sewer):
@@ -125,4 +128,3 @@ def get_collide(mario, block, x_speed, y_speed):
         mario.rect.bottom = block.rect.top
         mario.onGround = True
         mario.y_speed = 0
-
