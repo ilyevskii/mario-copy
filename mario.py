@@ -59,6 +59,20 @@ class Mario(sprite.Sprite):
         self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs)
 
     def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs):
+
+        # Проверка на столкновения с блоками с вопросами
+        for block in spec_platforms:
+
+            if sprite.collide_rect(self, block):
+
+                if not self.onGround and self.rect.bottom >= block.rect.top + 10:
+                    self.y_speed = -1
+                    spec_platforms.remove(block)
+                else:
+                    self.rect.bottom = block.rect.top
+                    self.onGround = True
+                    self.y_speed = 0
+
         # Проверка на столкновения с блоками
         for block in platforms:
 
@@ -88,19 +102,6 @@ class Mario(sprite.Sprite):
                 else:
                     if self.lives > 0:
                         self.lives -= 1
-
-        # Проверка на столкновения с блоками с вопросами
-        for block in spec_platforms:
-
-            if sprite.collide_rect(self, block):
-
-                if not self.onGround and self.rect.top >= block.rect.bottom - 20:
-                    self.y_speed = -1
-                    spec_platforms.remove(block)
-                else:
-                    self.rect.bottom = block.rect.top
-                    self.onGround = True
-                    self.y_speed = 0
 
         # Проверка на столкновения с трубами
         for sewer in sewers:
