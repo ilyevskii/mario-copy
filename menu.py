@@ -33,6 +33,43 @@ def game_over(screen, run):
         pygame.display.update()
 
 
+def game_pause(screen, run):
+    while True:
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+
+        screen.fill("White")
+
+        PLAY_TEXT = get_font(90).render("Game is pause", True, "Black")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 160))
+        screen.blit(PLAY_TEXT, PLAY_RECT)
+
+        CONTINUE_PLAY = Button(image=None, pos=(640, 450),
+                            text_input="CONTINUE", font=get_font(75), base_color="Black", hovering_color="Green")
+
+        MENU = Button(image=None, pos=(640, 600),
+                            text_input="MENU", font=get_font(75), base_color="Black", hovering_color="Red")
+
+        CONTINUE_PLAY.changeColor(PLAY_MOUSE_POS)
+        CONTINUE_PLAY.update(screen)
+
+        MENU.changeColor(PLAY_MOUSE_POS)
+        MENU.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.K_ESCAPE:
+                return
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if CONTINUE_PLAY.checkForInput(PLAY_MOUSE_POS):
+                    return
+                if MENU.checkForInput(PLAY_MOUSE_POS):
+                    main_menu(screen, run)
+
+        pygame.display.update()
+
+
 def options(screen, run):
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
@@ -49,7 +86,7 @@ def options(screen, run):
         PAVEL_RECT = OPTIONS_TEXT.get_rect(center=(580, 360))
 
         ANDREW = get_font(45).render('Andrew Logvinov', True, "Black")
-        ANDREW_RECT = OPTIONS_TEXT.get_rect(center=(340, 460))
+        ANDREW_RECT = OPTIONS_TEXT.get_rect(center=(530, 460))
 
         screen.blit(OPTIONS_TEXT, OPTIONS_RECT)
         screen.blit(ILYA, ILYA_RECT)
