@@ -79,7 +79,9 @@ def main_menu(screen, run):
 
     BG = pygame.image.load("assets/Background.png")
 
-    while True:
+    get_continued = True
+
+    while get_continued:
         screen.blit(BG, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
