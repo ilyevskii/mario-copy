@@ -81,7 +81,7 @@ class Mario(sprite.Sprite):
 
                 if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
 
-                    sleep(0.25)
+                    #sleep(0.25)
                     mobs.remove(mob)
                 else:
                     if self.lives > 0:
