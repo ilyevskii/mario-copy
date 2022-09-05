@@ -147,7 +147,7 @@ def run():
         tmp_mobs = list(mobs)
         tmp_spec_platforms = list(special_platforms)
 
-        events = check_for_events()
+        events = check_for_events(pause=game_pause, screen=screen, run=run)
         if events[3]:
             if mario.onTube:
                 tmp_status = get_status_from_sewer(mario.rect.centerx, sewers)
@@ -193,6 +193,7 @@ def run():
         # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
             status = "dead"
+            break
 
     return status
 
