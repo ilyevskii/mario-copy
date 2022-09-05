@@ -154,7 +154,7 @@ def run():
                     status = tmp_status
 
         mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs)
-        update_mobs(mobs, platforms, sewers)
+        update_mobs(mobs, platforms, sewers, stairs)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
         # взаимодействовали. В списке tmp_coins эта монета ещё есть. В ифе удаляем монету из спрайтов
