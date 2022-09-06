@@ -8,7 +8,7 @@ from camera import Camera, camera_configure
 from menu import *
 
 timer = pygame.time.Clock()
-BG_WIDTH = 1000
+BG_WIDTH = 1280
 BG_HEIGHT = 720
 screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 
