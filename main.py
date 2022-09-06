@@ -13,10 +13,13 @@ BG_HEIGHT = 720
 screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 
 # Задаем уровень
-platforms_coordinates = [
+flour_coordinates = [
     #x, y, Количество блоков, направление отрисовки
     [0, 640, 69, "hor"],
     [0, 680, 69, "hor"],
+]
+platforms_coordinates = [
+    #x, y, Количество блоков, направление отрисовки
     [2840, 640, 16, "hor"],
     [2840, 680, 16, "hor"],
     [3600, 640, 109, "hor"],
@@ -67,7 +70,7 @@ stairs_coordinate = [
 
 coins_coordinates = [
     # x, y - координаты монетки
-    #[625, 460]
+    #[700, 500]
 ]
 
 mobs_coordinates = [
@@ -112,6 +115,7 @@ def run():
 
     # Создаем списки соответствующих спрайтов и мобов
     platforms = get_sprites(platforms_coordinates, "simple")
+    flours = get_sprites(flour_coordinates, "flour")
     special_platforms = get_sprites(special_blocks_coordinates, "special")
     coins = get_sprites(coins_coordinates, "coins")
     mobs = get_sprites(mobs_coordinates, "mobs")
@@ -120,7 +124,9 @@ def run():
 
     # Создаем одну большую группу спрайтов для общей отрисовки
     entities = pygame.sprite.Group()
-    entities.add(mario, platforms, mobs, coins, special_platforms, sewers, stairs)
+    animatedEntities = pygame.sprite.Group()
+    entities.add(mario, platforms, mobs, coins, special_platforms, sewers, stairs, flours)
+    animatedEntities.add(coins, special_platforms)
 
     # Создание камеры
     total_level_width = BG_WIDTH ** 2 / 40
@@ -148,8 +154,8 @@ def run():
                 if tmp_status != "none":
                     status = tmp_status
 
-        mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs)
-        update_mobs(mobs, platforms, sewers, stairs)
+        mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours)
+        update_mobs(mobs, platforms, sewers, stairs, flours)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
         # взаимодействовали. В списке tmp_coins эта монета ещё есть. В ифе удаляем монету из спрайтов
@@ -177,8 +183,9 @@ def run():
                 mob = Mob(x, y - 40)
                 mobs.append(mob)
             elif block.type == "coin":
-                mob = Coin(x, y - 40)
+                mob = Coin(x, y - 45)
                 coins.append(mob)
+                animatedEntities.add(mob)
 
             block = Platform(x, y)
             platforms.append(block)
@@ -189,7 +196,9 @@ def run():
         for e in entities:
             screen.blit(e.image, camera.apply(e))
 
+
         pygame.display.update()
+        animatedEntities.update()
         timer.tick(60)
 
         # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
