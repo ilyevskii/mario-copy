@@ -148,12 +148,15 @@ def run(lives: int):
 
     count = 0
 
-    max_coordinate = 120
+    max_coordinate = 0
+    score = 0
 
     while status == "Running":
 
-        if max_coordinate < mario.rect.x:
+        if max_coordinate < int(mario.rect.x / 120 - 1):
+            dif = int(mario.rect.x / 120 - 1) - max_coordinate
             max_coordinate = int(mario.rect.x / 120 - 1)
+            score += dif
 
         screen.blit(BG, (0, 0))
 
@@ -171,6 +174,8 @@ def run(lives: int):
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
             mario.set_position(120, 600)
+            mario.set_x_speed(0)
+            mario.set_y_speed(0)
         update_mobs(mobs, platforms, sewers, stairs, flours)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
@@ -185,6 +190,7 @@ def run(lives: int):
             mob_sound = pygame.mixer.Sound('music/mob_dead.wav')
             mob_sound.play(0)
             change_entities(entities, tmp_mobs, mobs)
+            score += 25
 
         COIN_TEXT = get_font(20).render(f"COIN COUNT: {count}", True, "Yellow")
         COIN_RECT = COIN_TEXT.get_rect(center=(1090, 50))
@@ -194,8 +200,8 @@ def run(lives: int):
         LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
-        LIVES_TEXT = get_font(20).render(f"SCORE: {max_coordinate}", True, "Black")
-        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 140))
+        LIVES_TEXT = get_font(20).render(f"SCORE: {score}", True, "Black")
+        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 130))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
         # Если врезались в блок с вопросом. Получаем нужный блок, его координаты. Меняем блок с вопросиком на обычный

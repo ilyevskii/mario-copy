@@ -201,6 +201,12 @@ class Mario(sprite.Sprite):
     def set_lives(self, lives: int):
         self.lives = lives
 
+    def set_x_speed(self, x_speed):
+        self.x_speed = x_speed
+
+    def set_y_speed(self, y_speed):
+        self.y_speed = y_speed
+
 
 def get_collide(mario, block, x_speed, y_speed):
     if x_speed > 0:
