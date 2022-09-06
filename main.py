@@ -1,3 +1,5 @@
+import pygame
+
 from events import check_for_events
 from mario import Mario
 from platforms import get_sprites, Platform, get_needed_platform, Coin, get_status_from_sewer
@@ -136,6 +138,9 @@ def run():
 
     camera = Camera(camera_configure, total_level_width, total_level_height)
     status = "Running"
+
+    pygame.mixer.music.load('music/play_background_music.mp3')
+    pygame.mixer.music.play(-1)
 
     while status == "Running":
 

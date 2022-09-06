@@ -7,6 +7,9 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 
 
 def game_over(screen, run):
+    pygame.mixer.music.set_volume(0.25)
+
+
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -28,12 +31,16 @@ def game_over(screen, run):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.load('music/menu_background_music.mp3')
                     main_menu(screen, run)
 
         pygame.display.update()
 
 
 def game_pause(screen, run):
+    pygame.mixer.music.set_volume(0.25)
+
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -59,18 +66,22 @@ def game_pause(screen, run):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.K_ESCAPE:
-                return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if CONTINUE_PLAY.checkForInput(PLAY_MOUSE_POS):
+                    pygame.mixer.music.set_volume(1)
+
                     return
                 if MENU.checkForInput(PLAY_MOUSE_POS):
+                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.load('music/menu_background_music.mp3')
                     main_menu(screen, run)
 
         pygame.display.update()
 
 
 def options(screen, run):
+
+
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -117,6 +128,10 @@ def main_menu(screen, run):
     BG = pygame.image.load("assets/Background.png")
 
     get_continued = True
+
+    if not pygame.mixer.music.get_busy():
+        pygame.mixer.music.load('music/menu_background_music.mp3')
+        pygame.mixer.music.play(-1)
 
     while get_continued:
         screen.blit(BG, (0, 0))
