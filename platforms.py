@@ -91,18 +91,18 @@ class Sewer(Flour):
         self.mark = mark
         if self.mark == "tube_1":
             self.image = image.load("images/sewer.png")
+            self.rect = Rect(x, y, SEWER_WIDTH, SEWER_HEIGHT)
         elif self.mark == "tube_2":
             picture = pygame.image.load("images/tube_3.png")
-            picture = pygame.transform.scale(picture, (90, 180))
+            self.rect = Rect(x, y, 80, 180)
             self.image = picture
         else:
             picture = pygame.image.load("images/biigest_tube.png")
-            picture = pygame.transform.scale(picture, (90, 220))
+            self.rect = Rect(x, y, 80, 220)
             self.image = picture
 
 
         self.status = status
-        self.rect = Rect(x, y, SEWER_WIDTH, SEWER_HEIGHT)
 
 
 # class Mushroom(Platform):
