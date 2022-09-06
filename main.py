@@ -116,6 +116,8 @@ def run(lives: int):
     BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
 
+    SCORE = 0
+
     # Создаем списки соответствующих спрайтов и мобов
     platforms = get_sprites(platforms_coordinates, "simple")
     flours = get_sprites(flour_coordinates, "flour")
@@ -143,7 +145,12 @@ def run(lives: int):
 
     count = 0
 
+    max_coordinate = 120
+
     while status == "Running":
+
+        if max_coordinate < mario.rect.x:
+            max_coordinate = int(mario.rect.x / 120 - 1)
 
         screen.blit(BG, (0, 0))
 
@@ -184,6 +191,10 @@ def run(lives: int):
         LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
+        LIVES_TEXT = get_font(20).render(f"SCORE: {max_coordinate}", True, "Black")
+        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 140))
+        screen.blit(LIVES_TEXT, LIVES_RECT)
+
         # Если врезались в блок с вопросом. Получаем нужный блок, его координаты. Меняем блок с вопросиком на обычный
         # блок. На блок ставим монету или моба, в зависимости от типа, который передается при конструировании уровня
         if len(tmp_spec_platforms) != len(special_platforms):
@@ -213,8 +224,6 @@ def run(lives: int):
         pygame.display.update()
         animatedEntities.update()
         timer.tick(60)
-
-        print(mario.lives)
 
         # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
