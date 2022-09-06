@@ -2,6 +2,7 @@ from pygame import *
 import pyganim
 import pygame
 from time import sleep
+from threading import Thread
 
 WIDTH = 41
 HEIGHT = 60
@@ -23,7 +24,6 @@ JUMP_LEFT_ANIMATION = [('images/marioJumpLeft.png', ANIMATION_DELAY)]
 JUMP_RIGHT_ANIMATION = [('images/marioJumpRight.png', ANIMATION_DELAY)]
 
 
-
 class Mario(sprite.Sprite):
 
     def __init__(self, x, y):
@@ -37,7 +37,7 @@ class Mario(sprite.Sprite):
         self.x_speed = 0
         self.y_speed = 0
         self.coins = 0
-        self.lives = 1
+        self.lives = 5
 
         self.image.set_colorkey(Color(COLOR))
         # Анимация движения вправо
@@ -79,6 +79,7 @@ class Mario(sprite.Sprite):
         # Проверка, упал ли вниз карты
         if 800 < self.rect.bottom < 811:
             self.lives -= 1
+            return True
 
         if movingRight:
             self.x_speed = MOVE_SPEED
@@ -118,12 +119,13 @@ class Mario(sprite.Sprite):
         self.onTube = False
         self.onGround = False
 
-
         self.rect.centery += self.y_speed
-        self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs, flours)
+        if self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs, flours) == -1:
+            return True
 
         self.rect.centerx += self.x_speed
-        self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs, flours)
+        if self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs, flours) == -1:
+            return True
 
     def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs, flours):
 
@@ -175,12 +177,13 @@ class Mario(sprite.Sprite):
             if sprite.collide_rect(self, mob):
 
                 if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
-
-                    # sleep(0.25)
-                    mobs.remove(mob)
+                    mob.is_alive = False
+                    mob.rect.height = 15
+                    self.y_speed = -8
                 else:
                     if self.lives > 0:
                         self.lives -= 1
+                        return -1
 
         # Проверка на столкновения с трубами
         for sewer in sewers:
@@ -191,6 +194,18 @@ class Mario(sprite.Sprite):
                 if y_speed > 0:
                     self.onTube = True
 
+    def set_position(self, x: int, y: int):
+        self.rect.x = x
+        self.rect.y = y
+
+    def set_lives(self, lives: int):
+        self.lives = lives
+
+    def set_x_speed(self, x_speed):
+        self.x_speed = x_speed
+
+    def set_y_speed(self, y_speed):
+        self.y_speed = y_speed
 
 
 def get_collide(mario, block, x_speed, y_speed):
