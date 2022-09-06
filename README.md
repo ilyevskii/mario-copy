@@ -1,2 +1,2 @@
 # Mario
-Our of the popular platformer Mario
+Our version of the popular platformer Mario

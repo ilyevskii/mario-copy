@@ -1,5 +1,6 @@
 from pygame import *
 import pyganim
+import pygame
 from time import sleep
 
 WIDTH = 41
@@ -67,7 +68,7 @@ class Mario(sprite.Sprite):
         self.boltAnimJump = pyganim.PygAnimation(STAY_ANIMATION)
         self.boltAnimJump.play()
 
-    def update(self, moves, platforms, coins, mobs, spec_platforms, sewers, stairs):
+    def update(self, moves, platforms, coins, mobs, spec_platforms, sewers, stairs, flours):
         # Изменение позиции персонажа
 
         # moves - результат работы файла events.
@@ -106,6 +107,8 @@ class Mario(sprite.Sprite):
 
         if movingUp:
             if self.onGround:
+                jump_sound = pygame.mixer.Sound('music/jump.wav')
+                jump_sound.play(0)
                 self.y_speed -= JUMP_POWER
                 self.onGround = False
 
@@ -117,12 +120,12 @@ class Mario(sprite.Sprite):
 
 
         self.rect.centery += self.y_speed
-        self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs)
+        self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs, flours)
 
         self.rect.centerx += self.x_speed
-        self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs)
+        self.check_for_collide(self.x_speed, 0, platforms, coins, mobs, spec_platforms, sewers, stairs, flours)
 
-    def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs):
+    def check_for_collide(self, x_speed, y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs, flours):
 
         # Проверка на столкновения с блоками с вопросами
         for block in spec_platforms:
@@ -147,7 +150,11 @@ class Mario(sprite.Sprite):
         for block in stairs:
 
             if sprite.collide_rect(self, block):
+                get_collide(self, block, x_speed, y_speed)
 
+        for block in flours:
+
+            if sprite.collide_rect(self, block):
                 get_collide(self, block, x_speed, y_speed)
 
         # Проверка на столкновения с монетами
