@@ -1,6 +1,7 @@
 import pygame.image
 from pygame import *
 import pyganim
+from time import sleep
 
 WIDTH = 39
 HEIGHT = 45
@@ -10,6 +11,7 @@ ANIMATION_DELAY = 70
 COLOR = (90, 90, 90)
 
 MOB_ANIMATION  = [("images/mobLeft.png"), ("images/mobRight.png")]
+MOB_DEAD_ANIMATION = [("images/mobDead.png", ANIMATION_DELAY)]
 
 class Mob(sprite.Sprite):
 
@@ -22,12 +24,16 @@ class Mob(sprite.Sprite):
         self.onGround = False
         self.x_speed = MOVE_SPEED
         self.y_speed = 0
+        self.is_alive = True
 
         boltAnim = []
         for anim in MOB_ANIMATION:
             boltAnim.append((anim, ANIMATION_DELAY))
         self.boltAnimSpec = pyganim.PygAnimation(boltAnim)
         self.boltAnimSpec.play()
+
+        self.boltAnimDead = pyganim.PygAnimation(MOB_DEAD_ANIMATION)
+        self.boltAnimDead.play()
 
     def update(self, platforms, sewers, stairs, flours):
         # Изменение позиции моба
@@ -44,7 +50,11 @@ class Mob(sprite.Sprite):
         self.check_for_collide(self.x_speed, 0, platforms, sewers, stairs, flours)
 
         self.image.fill(Color(COLOR))
-        self.boltAnimSpec.blit(self.image, (0, 0))
+
+        if self.is_alive:
+            self.boltAnimSpec.blit(self.image, (0, 0))
+        else:
+            self.boltAnimDead.blit(self.image, (0, 0))
 
 
     def check_for_collide(self, x_speed, y_speed, platforms, sewers, stairs, flours):
@@ -86,9 +96,7 @@ def update_mobs(mobs, platforms, sewers, stairs, flours):
     #Обновляем список мобов
 
     for mob in mobs:
-        mob.update(platforms, sewers, stairs, flours)
-
-
-
-
-
+        if mob.is_alive:
+            mob.update(platforms, sewers, stairs, flours)
+        else:
+            mobs.remove(mob)
