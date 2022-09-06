@@ -78,8 +78,6 @@ class Mob(sprite.Sprite):
                 get_collide(self, flour, x_speed, y_speed)
 
 
-
-
 def get_collide(mob, block, x_speed, y_speed):
     if x_speed > 0:
         mob.rect.right = block.rect.left
