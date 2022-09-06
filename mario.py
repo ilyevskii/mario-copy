@@ -133,8 +133,13 @@ class Mario(sprite.Sprite):
             if sprite.collide_rect(self, block):
 
                 if not self.onGround and self.rect.bottom >= block.rect.top + 10:
-                    self.y_speed = -1
-                    spec_platforms.remove(block)
+
+                    if block.rect.left < self.rect.centerx < block.rect.right:
+                        self.y_speed = -1
+                        spec_platforms.remove(block)
+
+                    else:
+                        get_collide(self, block, x_speed, y_speed)
                 else:
                     self.rect.bottom = block.rect.top
                     self.onGround = True
@@ -181,7 +186,7 @@ class Mario(sprite.Sprite):
         for sewer in sewers:
 
             if sprite.collide_rect(self, sewer):
-                is_collid = True
+
                 get_collide(self, sewer, x_speed, y_speed)
                 if y_speed > 0:
                     self.onTube = True
@@ -199,7 +204,7 @@ def get_collide(mario, block, x_speed, y_speed):
         mario.rect.top = block.rect.bottom
         mario.y_speed = 0
 
-    if y_speed >= 0:
+    if y_speed > 0:
         mario.rect.bottom = block.rect.top
         mario.onGround = True
         mario.y_speed = 0
