@@ -12,9 +12,11 @@ BG_WIDTH = 1280
 BG_HEIGHT = 720
 screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 
+
 # Задаем уровень
 flour_coordinates = [
-    #x, y, Количество блоков, направление отрисовки
+    [0, 640, 69, "hor"],
+    [0, 680, 69, "hor"],
     [0, 0, 30, "ver"],
     [40, 0, 30, "ver"],
     [0, 640, 69, "hor"],
@@ -72,7 +74,7 @@ stairs_coordinate = [
 
 coins_coordinates = [
     # x, y - координаты монетки
-    #[700, 500]
+    # [700, 500]
 ]
 
 mobs_coordinates = [
@@ -97,7 +99,8 @@ special_blocks_coordinates = [
 
 sewer_coordinates = [
     # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
-    [400, 540, "none"], [1700, 540, "lvl1"]
+    [1240, 540, "none", "tube_1"], [1520, 500, "lvl1", "tube_2"], [1800, 460, "none", "tube_3"],
+    [2120, 460, "none", "tube_3"], [6520, 540, "none", "tube_1"]
 ]
 
 

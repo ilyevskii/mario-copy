@@ -2,6 +2,7 @@ from pygame import *
 import pyganim
 import pygame
 from time import sleep
+from threading import Thread
 
 WIDTH = 41
 HEIGHT = 60
@@ -176,9 +177,9 @@ class Mario(sprite.Sprite):
             if sprite.collide_rect(self, mob):
 
                 if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
-
-                    # sleep(0.25)
-                    mobs.remove(mob)
+                    mob.is_alive = False
+                    mob.rect.height = 15
+                    self.y_speed = -8
                 else:
                     if self.lives > 0:
                         self.lives -= 1
