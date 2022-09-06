@@ -133,8 +133,13 @@ class Mario(sprite.Sprite):
             if sprite.collide_rect(self, block):
 
                 if not self.onGround and self.rect.bottom >= block.rect.top + 10:
-                    self.y_speed = -1
-                    spec_platforms.remove(block)
+
+                    if block.rect.left < self.rect.centerx < block.rect.right:
+                        self.y_speed = -1
+                        spec_platforms.remove(block)
+
+                    else:
+                        get_collide(self, block, x_speed, y_speed)
                 else:
                     self.rect.bottom = block.rect.top
                     self.onGround = True
