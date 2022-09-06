@@ -11,10 +11,11 @@ COLOR = (0, 0, 0)
 ANIMATION_DELAY = 130
 
 COIN_ANIMATION = [("images/coin_0.png"), ("images/coin_1.png"),
-              ("images/coin_2.png"), ("images/coin_3.png")]
+                  ("images/coin_2.png"), ("images/coin_3.png")]
 
 SPECIAL_BLOCK_ANIMATION = [("images/special_block_0.png"), ("images/special_block_1.png"),
-              ("images/special_block_2.png"), ("images/special_block_1.png"), ("images/special_block_0.png")]
+                           ("images/special_block_2.png"), ("images/special_block_1.png"),
+                           ("images/special_block_0.png")]
 
 
 class Flour(sprite.Sprite):
@@ -25,6 +26,7 @@ class Flour(sprite.Sprite):
         picture = pygame.image.load("images/flour.png")
         picture = pygame.transform.scale(picture, (40, 40))
         self.image = picture
+
 
 class Platform(sprite.Sprite):
 
@@ -42,7 +44,6 @@ class Stairs(Flour):
         picture = pygame.image.load("images/stair.png")
         picture = pygame.transform.scale(picture, (40, 40))
         self.image = picture
-
 
 
 class Special_Platform(Flour):
@@ -85,9 +86,21 @@ class Coin(Flour):
 
 class Sewer(Flour):
     # Труба
-    def __init__(self, x, y, status):
+    def __init__(self, x, y, status, mark):
         Flour.__init__(self, x, y)
-        self.image = image.load("images/sewer.png")
+        self.mark = mark
+        if self.mark == "tube_1":
+            self.image = image.load("images/sewer.png")
+        elif self.mark == "tube_2":
+            picture = pygame.image.load("images/tube_3.png")
+            picture = pygame.transform.scale(picture, (90, 180))
+            self.image = picture
+        else:
+            picture = pygame.image.load("images/biigest_tube.png")
+            picture = pygame.transform.scale(picture, (90, 220))
+            self.image = picture
+
+
         self.status = status
         self.rect = Rect(x, y, SEWER_WIDTH, SEWER_HEIGHT)
 
@@ -125,7 +138,8 @@ def get_sprites(coordinates, type):
             elif type == "mobs":
                 sprite = Mob(x, y)
             elif type == "sewer":
-                sprite = Sewer(x, y, line[2])
+                mark = line[3]
+                sprite = Sewer(x, y, line[2], mark)
             elif type == "stair":
                 sprite = Stairs(x, y)
             else:
