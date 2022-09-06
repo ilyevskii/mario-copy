@@ -15,15 +15,17 @@ screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 # Задаем уровень
 flour_coordinates = [
     #x, y, Количество блоков, направление отрисовки
+    [0, 0, 30, "ver"],
+    [40, 0, 30, "ver"],
     [0, 640, 69, "hor"],
     [0, 680, 69, "hor"],
-]
-platforms_coordinates = [
-    #x, y, Количество блоков, направление отрисовки
     [2840, 640, 16, "hor"],
     [2840, 680, 16, "hor"],
     [3600, 640, 109, "hor"],
     [3600, 680, 109, "hor"],
+]
+platforms_coordinates = [
+    #x, y, Количество блоков, направление отрисовки
     [800, 480, 1, "hor"],
     [880, 480, 1, "hor"],
     [960, 480, 1, "hor"],
@@ -111,7 +113,7 @@ def run():
     pygame.init()
     BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
-    mario = Mario(50, 640)
+    mario = Mario(120, 640)
 
     # Создаем списки соответствующих спрайтов и мобов
     platforms = get_sprites(platforms_coordinates, "simple")
