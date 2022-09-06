@@ -1,4 +1,5 @@
 from pygame import *
+import pyganim
 from time import sleep
 
 WIDTH = 41
@@ -6,16 +7,29 @@ HEIGHT = 60
 MOVE_SPEED = 3.5
 JUMP_POWER = 11
 GRAVITY = 0.35
+ANIMATION_DELAY = 55
+COLOR = (0, 0, 0)
+
 LEFT_POSE = image.load("images/marioLeft.png")
-RIGHT_POSE = image.load("images/marioRight.png")
+RIGHT_MOVE_ANIMATION = [("images/marioRight_0.png"), ("images/marioRight_1.png"),
+              ("images/marioRight_2.png"), ("images/marioRight_3.png")]
+
+LEFT_MOVE_ANIMATION = [("images/marioLeft_0.png"), ("images/marioLeft_1.png"),
+              ("images/marioLeft_2.png"), ("images/marioLeft_3.png")]
+
+STAY_ANIMATION = [('images/marioRight_0.png', ANIMATION_DELAY)]
+JUMP_LEFT_ANIMATION = [('images/marioJumpLeft.png', ANIMATION_DELAY)]
+JUMP_RIGHT_ANIMATION = [('images/marioJumpRight.png', ANIMATION_DELAY)]
+
 
 
 class Mario(sprite.Sprite):
 
     def __init__(self, x, y):
         # Инициализация главного персонажа
-        sprite.Sprite.__init__(self)
-        self.image = RIGHT_POSE
+        super().__init__()
+
+        self.image = LEFT_POSE
         self.rect = Rect(x, y, WIDTH, HEIGHT)
         self.onGround = False
         self.onTube = False
@@ -23,6 +37,35 @@ class Mario(sprite.Sprite):
         self.y_speed = 0
         self.coins = 0
         self.lives = 1
+
+        self.image.set_colorkey(Color(COLOR))
+        # Анимация движения вправо
+        boltAnim = []
+        for anim in RIGHT_MOVE_ANIMATION:
+            boltAnim.append((anim, ANIMATION_DELAY))
+        self.boltAnimRight = pyganim.PygAnimation(boltAnim)
+        self.boltAnimRight.play()
+
+        # Анимация движения влево
+        boltAnim = []
+        for anim in LEFT_MOVE_ANIMATION:
+            boltAnim.append((anim, ANIMATION_DELAY))
+
+        self.boltAnimLeft = pyganim.PygAnimation(boltAnim)
+        self.boltAnimLeft.play()
+
+        self.boltAnimStay = pyganim.PygAnimation(STAY_ANIMATION)
+        self.boltAnimStay.play()
+        self.boltAnimStay.blit(self.image, (0, 0))
+
+        self.boltAnimJumpLeft = pyganim.PygAnimation(JUMP_LEFT_ANIMATION)
+        self.boltAnimJumpLeft.play()
+
+        self.boltAnimJumpRight = pyganim.PygAnimation(JUMP_RIGHT_ANIMATION)
+        self.boltAnimJumpRight.play()
+
+        self.boltAnimJump = pyganim.PygAnimation(STAY_ANIMATION)
+        self.boltAnimJump.play()
 
     def update(self, moves, platforms, coins, mobs, spec_platforms, sewers, stairs):
         # Изменение позиции персонажа
@@ -38,23 +81,40 @@ class Mario(sprite.Sprite):
 
         if movingRight:
             self.x_speed = MOVE_SPEED
-            self.image = RIGHT_POSE
+            self.image.fill(Color(COLOR))
+
+            if self.y_speed != 0.7 and self.y_speed != 0.35 and self.y_speed != 0:
+                self.boltAnimJumpRight.blit(self.image, (0, 0))
+            else:
+                self.boltAnimRight.blit(self.image, (0, 0))
+
         if movingLeft:
             self.x_speed = -MOVE_SPEED
-            self.image = LEFT_POSE
+            self.image.fill(Color(COLOR))
+
+            if self.y_speed != 0.7 and self.y_speed != 0.35 and self.y_speed != 0:
+                self.boltAnimJumpLeft.blit(self.image, (0, 0))
+            else:
+                self.boltAnimLeft.blit(self.image, (0, 0))
 
         if not movingRight and not movingLeft:
             self.x_speed = 0
+            self.boltAnimStay.blit(self.image, (0, 0))
+
+            self.image.fill(Color(COLOR))
+            self.boltAnimStay.blit(self.image, (0, 0))
 
         if movingUp:
             if self.onGround:
                 self.y_speed -= JUMP_POWER
+                self.onGround = False
 
         if not self.onGround:
             self.y_speed += GRAVITY
 
         self.onTube = False
         self.onGround = False
+
 
         self.rect.centery += self.y_speed
         self.check_for_collide(0, self.y_speed, platforms, coins, mobs, spec_platforms, sewers, stairs)
@@ -81,11 +141,13 @@ class Mario(sprite.Sprite):
         for block in platforms:
 
             if sprite.collide_rect(self, block):
+
                 get_collide(self, block, x_speed, y_speed)
 
         for block in stairs:
 
             if sprite.collide_rect(self, block):
+
                 get_collide(self, block, x_speed, y_speed)
 
         # Проверка на столкновения с монетами
@@ -112,10 +174,11 @@ class Mario(sprite.Sprite):
         for sewer in sewers:
 
             if sprite.collide_rect(self, sewer):
-
+                is_collid = True
                 get_collide(self, sewer, x_speed, y_speed)
                 if y_speed > 0:
                     self.onTube = True
+
 
 
 def get_collide(mario, block, x_speed, y_speed):
@@ -129,7 +192,8 @@ def get_collide(mario, block, x_speed, y_speed):
         mario.rect.top = block.rect.bottom
         mario.y_speed = 0
 
-    if y_speed > 0:
+    if y_speed >= 0:
         mario.rect.bottom = block.rect.top
         mario.onGround = True
         mario.y_speed = 0
+
