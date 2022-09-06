@@ -109,11 +109,12 @@ def change_entities(entities, tmp_lst, lst):
             entities.remove(i)
 
 
-def run():
+def run(lives: int):
+    mario = Mario(120, 600)
+    mario.set_lives(lives)
     pygame.init()
     BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
-    mario = Mario(120, 640)
 
     # Создаем списки соответствующих спрайтов и мобов
     platforms = get_sprites(platforms_coordinates, "simple")
@@ -140,6 +141,8 @@ def run():
     pygame.mixer.music.load('music/play_background_music.mp3')
     pygame.mixer.music.play(-1)
 
+    count = 0
+
     while status == "Running":
 
         screen.blit(BG, (0, 0))
@@ -156,7 +159,8 @@ def run():
                 if tmp_status != "none":
                     status = tmp_status
 
-        mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours)
+        if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
+            mario.set_position(120, 600)
         update_mobs(mobs, platforms, sewers, stairs, flours)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
@@ -165,12 +169,20 @@ def run():
             coin_sound = pygame.mixer.Sound('music/coin.wav')
             coin_sound.play(0)
             change_entities(entities, tmp_coins, coins)
+            count += 1
 
         if len(tmp_mobs) != len(mobs):
             mob_sound = pygame.mixer.Sound('music/mob_dead.wav')
             mob_sound.play(0)
             change_entities(entities, tmp_mobs, mobs)
 
+        COIN_TEXT = get_font(20).render(f"COIN COUNT: {count}", True, "Yellow")
+        COIN_RECT = COIN_TEXT.get_rect(center=(1090, 50))
+        screen.blit(COIN_TEXT, COIN_RECT)
+
+        LIVES_TEXT = get_font(20).render(f"LIVES: {mario.lives}", True, "Black")
+        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
+        screen.blit(LIVES_TEXT, LIVES_RECT)
 
         # Если врезались в блок с вопросом. Получаем нужный блок, его координаты. Меняем блок с вопросиком на обычный
         # блок. На блок ставим монету или моба, в зависимости от типа, который передается при конструировании уровня
@@ -198,10 +210,11 @@ def run():
         for e in entities:
             screen.blit(e.image, camera.apply(e))
 
-
         pygame.display.update()
         animatedEntities.update()
         timer.tick(60)
+
+        print(mario.lives)
 
         # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
