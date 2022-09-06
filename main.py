@@ -173,7 +173,7 @@ def run(lives: int):
                     status = tmp_status
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
-            mario.set_position(120, 600)
+            mario.set_position(120, 300)
             mario.set_x_speed(0)
             mario.set_y_speed(0)
         update_mobs(mobs, platforms, sewers, stairs, flours)
@@ -239,7 +239,7 @@ def run(lives: int):
             status = "dead"
             break
 
-    return status
+    return status, score, count
 
 
 main_menu(screen=screen, run=run)
