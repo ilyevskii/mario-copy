@@ -154,14 +154,21 @@ def run():
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
         # взаимодействовали. В списке tmp_coins эта монета ещё есть. В ифе удаляем монету из спрайтов
         if len(tmp_coins) != len(coins):
+            coin_sound = pygame.mixer.Sound('music/coin.wav')
+            coin_sound.play(0)
             change_entities(entities, tmp_coins, coins)
 
         if len(tmp_mobs) != len(mobs):
+            mob_sound = pygame.mixer.Sound('music/mob_dead.wav')
+            mob_sound.play(0)
             change_entities(entities, tmp_mobs, mobs)
+
 
         # Если врезались в блок с вопросом. Получаем нужный блок, его координаты. Меняем блок с вопросиком на обычный
         # блок. На блок ставим монету или моба, в зависимости от типа, который передается при конструировании уровня
         if len(tmp_spec_platforms) != len(special_platforms):
+            special_sound = pygame.mixer.Sound('music/special_sound.wav')
+            special_sound.play(0)
             block = get_needed_platform(tmp_spec_platforms, special_platforms)
             x = block.rect.x
             y = block.rect.y

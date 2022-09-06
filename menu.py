@@ -21,7 +21,7 @@ def game_over(screen, run):
         screen.blit(PLAY_TEXT, PLAY_RECT)
 
         PLAY_BACK = Button(image=None, pos=(640, 460),
-                            text_input="GO TO MENU", font=get_font(75), base_color="White", hovering_color="Red")
+                            text_input="GO TO MENU", font=get_font(75), base_color="White", hovering_color="Orange")
 
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(screen)
@@ -40,7 +40,9 @@ def game_over(screen, run):
 
 
 def game_pause(screen, run):
-    pygame.mixer.music.set_volume(0.25)
+    pygame.mixer.music.pause()
+    coin_sound = pygame.mixer.Sound('music/pause.wav')
+    coin_sound.play(0)
 
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
@@ -69,11 +71,11 @@ def game_pause(screen, run):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if CONTINUE_PLAY.checkForInput(PLAY_MOUSE_POS):
-                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.unpause()
 
                     return
                 if MENU.checkForInput(PLAY_MOUSE_POS):
-                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.unpause()
                     pygame.mixer.music.load('music/menu_background_music.mp3')
                     main_menu(screen, run)
 
