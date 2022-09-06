@@ -11,18 +11,8 @@ BG_HEIGHT = 720
 screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 
 # Задаем уровень
-# platforms_coordinates = [
-#             #x, y, Количество блоков, направление отрисовки
-#             [0, 0, 64, "hor"],
-#             [0, 680, 64, "hor"],
-#             [0, 0, 20, "ver"],
-#             [2520, 0, 20, "ver"],
-#             [200, 300, 7, "hor"],
-#             [600, 500, 3, "hor"],
-#             [1160, 400, 3, "hor"],
-#             [1200, 600, 2, "ver"]
-# ]
 platforms_coordinates = [
+    #x, y, Количество блоков, направление отрисовки
     [0, 640, 69, "hor"],
     [0, 680, 69, "hor"],
     [2840, 640, 16, "hor"],
@@ -75,7 +65,7 @@ stairs_coordinate = [
 
 coins_coordinates = [
     # x, y - координаты монетки
-    [360, 640], [625, 460], [250, 260]
+    #[625, 460]
 ]
 
 mobs_coordinates = [
@@ -100,7 +90,7 @@ special_blocks_coordinates = [
 
 sewer_coordinates = [
     # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
-    [400, 600, "none"], [1700, 580, "lvl1"]
+    [400, 540, "none"], [1700, 540, "lvl1"]
 ]
 
 
@@ -116,7 +106,7 @@ def run():
     pygame.init()
     BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
-    mario = Mario(50, 50)
+    mario = Mario(50, 640)
 
     # Создаем списки соответствующих спрайтов и мобов
     platforms = get_sprites(platforms_coordinates, "simple")
