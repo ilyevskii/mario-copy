@@ -1,5 +1,6 @@
 from pygame import *
 import pyganim
+import pygame
 from time import sleep
 
 WIDTH = 41
@@ -106,6 +107,8 @@ class Mario(sprite.Sprite):
 
         if movingUp:
             if self.onGround:
+                jump_sound = pygame.mixer.Sound('music/jump.wav')
+                jump_sound.play(0)
                 self.y_speed -= JUMP_POWER
                 self.onGround = False
 
