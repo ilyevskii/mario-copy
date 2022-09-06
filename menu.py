@@ -7,7 +7,8 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 
 
 def game_over(screen, run):
-    pygame.mixer.music.set_volume(0.25)
+    pygame.mixer.music.load('music/mario-dead.mp3')
+    pygame.mixer.music.play(1)
 
 
     while True:
