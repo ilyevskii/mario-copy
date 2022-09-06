@@ -1,2 +1,2 @@
-# Anti_Mario
-Chinese version of the popular platformer Mario
+# Mario
+Our of the popular platformer Mario
