@@ -169,8 +169,6 @@ def run(lives: int):
     max_coordinate = 0
     score = 0
 
-    mob_collide = False
-
     while status == "Running":
 
         if max_coordinate < int(mario.rect.x / 120 - 1):
@@ -193,15 +191,9 @@ def run(lives: int):
                     status = tmp_status
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
-            mob_collide = True
-            score -= 25
-
-        if mob_collide is True:
-            mario.rect.y -= 10
-            if mario.rect.y <= 200:
-                mario.set_position(120, 300)
-                mario.set_x_speed(0)
-                mario.set_y_speed(0)
+            mario.set_position(120, 300)
+            mario.set_x_speed(0)
+            mario.set_y_speed(0)
 
         update_mobs(mobs, platforms, sewers, stairs, flours)
 

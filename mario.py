@@ -181,7 +181,6 @@ class Mario(sprite.Sprite):
                     mob.rect.height = 15
                     self.y_speed = -8
                 else:
-                    mob.is_alive = False
                     if self.lives > 0:
                         self.lives -= 1
                         return -1
