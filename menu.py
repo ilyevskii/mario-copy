@@ -163,9 +163,11 @@ def main_menu(screen, run):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    status = run(5)
+                    status = run(5, 1)
                     if status == 'dead':
                         game_over(screen, run)
+                    elif status == 'lvl1':
+                        pass
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options(screen, run)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):

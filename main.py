@@ -121,6 +121,26 @@ mobs_coordinates = [
 
 ]
 
+flour_coordinates_lvl1 = [
+    [0, 0, 30, "hor"],
+    [0, 40, 30, "hor"],
+    [0, 0, 30, "ver"],
+    [40, 0, 30, "ver"],
+    [1240, 0, 30, "ver"],
+    [1200, 0, 30, "ver"],
+    [0, 640, 30, "hor"],
+    [0, 680, 30, "hor"],
+]
+
+stairs_coordinate_lvl1 = [
+    [300, 560, 2, "ver"],
+    [475, 480, 4, "ver"],
+    [650, 400, 6, "ver"],
+    [825, 480, 4, "ver"],
+    [1000, 560, 2, "ver"]
+]
+
+
 
 def change_entities(entities, tmp_lst, lst):
     # Функция, удаляющая ненужные спрайты (например, монетка, если ее собрали)
@@ -130,7 +150,7 @@ def change_entities(entities, tmp_lst, lst):
             entities.remove(i)
 
 
-def run(lives: int):
+def run(lives: int, lvl: int):
     mario = Mario(120, 600)
     mario.set_lives(lives)
     pygame.init()
@@ -140,13 +160,22 @@ def run(lives: int):
     SCORE = 0
 
     # Создаем списки соответствующих спрайтов и мобов
-    platforms = get_sprites(platforms_coordinates, "simple")
-    flours = get_sprites(flour_coordinates, "flour")
-    special_platforms = get_sprites(special_blocks_coordinates, "special")
-    coins = get_sprites(coins_coordinates, "coins")
-    mobs = get_sprites(mobs_coordinates, "mobs")
-    sewers = get_sprites(sewer_coordinates, "sewer")
-    stairs = get_sprites(stairs_coordinate, "stair")
+    if lvl == 0:
+        platforms = get_sprites(platforms_coordinates, "simple")
+        flours = get_sprites(flour_coordinates, "flour")
+        special_platforms = get_sprites(special_blocks_coordinates, "special")
+        coins = get_sprites(coins_coordinates, "coins")
+        mobs = get_sprites(mobs_coordinates, "mobs")
+        sewers = get_sprites(sewer_coordinates, "sewer")
+        stairs = get_sprites(stairs_coordinate, "stair")
+    else:
+        platforms = []
+        special_platforms = []
+        coins = []
+        mobs = []
+        sewers = []
+        flours = get_sprites(flour_coordinates_lvl1, "flour")
+        stairs = get_sprites(stairs_coordinate_lvl1, "stair")
 
     # Создаем одну большую группу спрайтов для общей отрисовки
     entities = pygame.sprite.Group()
@@ -155,10 +184,16 @@ def run(lives: int):
     animatedEntities.add(coins, special_platforms)
 
     # Создание камеры
-    total_level_width = BG_WIDTH ** 2 / 40
-    total_level_height = BG_HEIGHT ** 2 / 40
+
+    if lvl == 0:
+        total_level_width = BG_WIDTH ** 2 / 40
+        total_level_height = BG_HEIGHT ** 2 / 40
+    else:
+        total_level_width = BG_WIDTH / 10
+        total_level_height = BG_HEIGHT
 
     camera = Camera(camera_configure, total_level_width, total_level_height)
+
     status = "Running"
 
     pygame.mixer.music.load('music/play_background_music.mp3')
@@ -243,6 +278,7 @@ def run(lives: int):
             platforms.append(block)
             entities.add(block, mob)
             change_entities(entities, tmp_spec_platforms, special_platforms)
+
 
         camera.update(mario)
         for e in entities:
