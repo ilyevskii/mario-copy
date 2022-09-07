@@ -6,7 +6,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("assets/font.ttf", size)
 
 
-def game_over(screen, run):
+def game_over(screen, run, score: int, coins: int):
     pygame.mixer.music.load('music/mario-dead.mp3')
     pygame.mixer.music.play(1)
 
@@ -17,10 +17,18 @@ def game_over(screen, run):
         screen.fill("black")
 
         PLAY_TEXT = get_font(90).render("GAME OVER!", True, "Red")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(660, 260))
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(660, 150))
         screen.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 460),
+        SCORE_TEXT = get_font(45).render(f"Your score {score}", True, "White")
+        SCORE_RECT = SCORE_TEXT.get_rect(center=(660, 300))
+        screen.blit(SCORE_TEXT, SCORE_RECT)
+
+        COIN_TEXT = get_font(45).render(f"Coins {coins}", True, "Yellow")
+        COIN_RECT = COIN_TEXT.get_rect(center=(660, 360))
+        screen.blit(COIN_TEXT, COIN_RECT)
+
+        PLAY_BACK = Button(image=None, pos=(640, 520),
                             text_input="GO TO MENU", font=get_font(75), base_color="White", hovering_color="Orange")
 
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
@@ -163,11 +171,15 @@ def main_menu(screen, run):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    status = run(5, 1)
+
+                    status = run(5)
                     if status == 'dead':
                         game_over(screen, run)
-                    elif status == 'lvl1':
-                        pass
+
+                    params = run(5)
+                    if params[0] == 'dead':
+                        game_over(screen, run, score=params[1], coins=params[2])
+
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options(screen, run)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
