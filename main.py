@@ -191,6 +191,8 @@ def run(lives: int):
                     status = tmp_status
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
+            death_sound = pygame.mixer.Sound('music/death.wav')
+            death_sound.play(0)
             mario.set_position(120, 300)
             mario.set_x_speed(0)
             mario.set_y_speed(0)
