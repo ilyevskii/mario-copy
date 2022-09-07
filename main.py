@@ -41,7 +41,9 @@ platforms_coordinates = [
     [4840, 320, 3, "hor"],
     [5080, 320, 1, "hor"],
     [5200, 320, 1, "hor"],
-    [5120, 480, 2, "hor"]
+    [5120, 480, 2, "hor"],
+    [3440, 280, 1, "hor"],
+    [3200, 280, 1, "hor"]
 
 ]
 stairs_coordinate = [
@@ -77,11 +79,6 @@ coins_coordinates = [
     # [700, 500]
 ]
 
-mobs_coordinates = [
-    # x, y - координаты моба
-    [650, 450]
-]
-
 special_blocks_coordinates = [
     # x, y, тип объекта, который появится (mob или coin)
     [640, 480, "coin"],
@@ -94,13 +91,34 @@ special_blocks_coordinates = [
     [4360, 480, "coin"],
     [4480, 480, "coin"],
     [5120, 320, "coin"],
-    [5160, 320, "coin"]
+    [5160, 320, "coin"],
+
 ]
 
 sewer_coordinates = [
     # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
-    [1240, 540, "none", "tube_1"], [1520, 500, "lvl1", "tube_2"], [1800, 460, "none", "tube_3"],
-    [2120, 460, "none", "tube_3"], [6520, 540, "none", "tube_1"]
+    [1240, 540, "none", "tube_1"], [1520, 500, "lvl1", "tube_2"],
+    [6520, 540, "none", "tube_1"], [2120, 460, "none", "tube_3"], [1800, 460, "none", "tube_3"],
+]
+# [2120, 460, "none", "tube_3"], [1800, 460, "none", "tube_3"],
+mobs_coordinates = [
+    # x, y - координаты моба
+    [650, 450],
+    [880, 450],
+    [1780, 450],
+    [1841, 450],
+    [1680, 450],
+    [3320, 280],
+    [3360, 280],
+    [3960, 450],
+    [3920, 450],
+    [4960, 450],
+    [5000, 450],
+    [5120, 410],
+    [5160, 370],
+    [7120, 450],
+    [7160, 450]
+
 ]
 
 
@@ -173,6 +191,8 @@ def run(lives: int):
                     status = tmp_status
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
+            death_sound = pygame.mixer.Sound('music/death.wav')
+            death_sound.play(0)
             mario.set_position(120, 300)
             mario.set_x_speed(0)
             mario.set_y_speed(0)
