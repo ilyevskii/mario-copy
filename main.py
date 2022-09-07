@@ -225,6 +225,10 @@ def run(lives: int):
         LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 130))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
+        if mario.rect.x > 7700:
+            status = 'win'
+            break
+
         # Если врезались в блок с вопросом. Получаем нужный блок, его координаты. Меняем блок с вопросиком на обычный
         # блок. На блок ставим монету или моба, в зависимости от типа, который передается при конструировании уровня
         if len(tmp_spec_platforms) != len(special_platforms):
