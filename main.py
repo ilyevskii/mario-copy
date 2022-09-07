@@ -7,6 +7,8 @@ from Mob import update_mobs, Mob
 from camera import Camera, camera_configure
 from menu import *
 
+import random
+
 timer = pygame.time.Clock()
 BG_WIDTH = 1280
 BG_HEIGHT = 720
@@ -77,7 +79,15 @@ stairs_coordinate = [
 coins_coordinates = [
     # x, y - координаты монетки
     # [700, 500]
+    [550, 580],
+    [1100, 500],
+    [1350, 580],
+    [1450, 580],
+    [1650, 580],
+    [2050, 500],
+    [2790, 480],
 ]
+
 
 special_blocks_coordinates = [
     # x, y, тип объекта, который появится (mob или coin)
