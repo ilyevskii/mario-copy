@@ -176,6 +176,7 @@ def run(lives: int):
             mario.set_position(120, 300)
             mario.set_x_speed(0)
             mario.set_y_speed(0)
+
         update_mobs(mobs, platforms, sewers, stairs, flours)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой

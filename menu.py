@@ -171,7 +171,7 @@ def main_menu(screen, run):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    params = run(1)
+                    params = run(5)
                     if params[0] == 'dead':
                         game_over(screen, run, score=params[1], coins=params[2])
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
