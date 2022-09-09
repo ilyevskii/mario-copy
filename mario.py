@@ -26,7 +26,7 @@ JUMP_RIGHT_ANIMATION = [('images/marioJumpRight.png', ANIMATION_DELAY)]
 
 class Mario(sprite.Sprite):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, coins = 0, lives = 5):
         # Инициализация главного персонажа
         super().__init__()
 
@@ -36,8 +36,8 @@ class Mario(sprite.Sprite):
         self.onTube = False
         self.x_speed = 0
         self.y_speed = 0
-        self.coins = 0
-        self.lives = 5
+        self.coins = coins
+        self.lives = lives
 
         self.image.set_colorkey(Color(COLOR))
         # Анимация движения вправо
@@ -176,7 +176,7 @@ class Mario(sprite.Sprite):
 
             if sprite.collide_rect(self, mob):
 
-                if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
+                if not self.onGround and self.rect.bottom <= mob.rect.top + 20:
                     mob.is_alive = False
                     mob.rect.height = 15
                     self.y_speed = -8
