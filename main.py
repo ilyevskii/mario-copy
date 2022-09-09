@@ -65,14 +65,14 @@ stairs_coordinate = [
     [6160, 560, 3, "hor"],
     [6160, 520, 2, "hor"],
     [6160, 480, 1, "hor"],
-    [7160, 600, 9 , "hor"],
-    [7200, 560, 8 , "hor"],
-    [7240, 520, 7 , "hor"],
-    [7280, 480, 6 , "hor"],
-    [7320, 440, 5 , "hor"],
-    [7360, 400, 4 , "hor"],
-    [7400, 360, 3 , "hor"],
-    [7440, 320, 2 , "hor"],
+    [7160, 600, 9, "hor"],
+    [7200, 560, 8, "hor"],
+    [7240, 520, 7, "hor"],
+    [7280, 480, 6, "hor"],
+    [7320, 440, 5, "hor"],
+    [7360, 400, 4, "hor"],
+    [7400, 360, 3, "hor"],
+    [7440, 320, 2, "hor"],
 
 ]
 
@@ -268,7 +268,6 @@ def run(lives=5, coins=0, points=0, lvl=0):
                 if tmp_status != "none":
                     status = tmp_status
 
-
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
             death_sound = pygame.mixer.Sound('music/death.wav')
             death_sound.play(0)
@@ -291,7 +290,6 @@ def run(lives=5, coins=0, points=0, lvl=0):
             mob_sound.play(0)
             change_entities(entities, tmp_mobs, mobs)
             score += 25
-
 
         if mario.rect.x > 7700:
             status = 'win'
@@ -339,7 +337,6 @@ def run(lives=5, coins=0, points=0, lvl=0):
         pygame.display.update()
         animatedEntities.update()
         timer.tick(60)
-
 
         # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
