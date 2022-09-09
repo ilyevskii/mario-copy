@@ -7,8 +7,10 @@ from Mob import update_mobs, Mob
 from camera import Camera, camera_configure
 from menu import *
 
+import random
+
 timer = pygame.time.Clock()
-BG_WIDTH = 1000
+BG_WIDTH = 1280
 BG_HEIGHT = 720
 screen = pygame.display.set_mode((BG_WIDTH, BG_HEIGHT))
 
@@ -77,7 +79,19 @@ stairs_coordinate = [
 coins_coordinates = [
     # x, y - координаты монетки
     # [700, 500]
+    [550, 580],
+    [1100, 500],
+    [1350, 580],
+    [1450, 580],
+    [1650, 580],
+    [2050, 500],
+    [2790, 480],
+    [3250, 480],
+    [4100, 580],
+    [4200, 480],
+    [4300, 580],
 ]
+
 
 special_blocks_coordinates = [
     # x, y, тип объекта, который появится (mob или coin)
@@ -92,7 +106,6 @@ special_blocks_coordinates = [
     [4480, 480, "coin"],
     [5120, 320, "coin"],
     [5160, 320, "coin"],
-
 ]
 
 sewer_coordinates = [
@@ -191,9 +204,12 @@ def run(lives: int):
                     status = tmp_status
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
-            mario.set_position(120, 600)
+            death_sound = pygame.mixer.Sound('music/death.wav')
+            death_sound.play(0)
+            mario.set_position(120, 300)
             mario.set_x_speed(0)
             mario.set_y_speed(0)
+
         update_mobs(mobs, platforms, sewers, stairs, flours)
 
         # При взаимодействии например, с монетой, mario.update() из списка coins удаляется монета, с которой
@@ -221,6 +237,10 @@ def run(lives: int):
         LIVES_TEXT = get_font(20).render(f"SCORE: {score}", True, "Black")
         LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 130))
         screen.blit(LIVES_TEXT, LIVES_RECT)
+
+        if mario.rect.x > 7700:
+            status = 'win'
+            break
 
         # Если врезались в блок с вопросом. Получаем нужный блок, его координаты. Меняем блок с вопросиком на обычный
         # блок. На блок ставим монету или моба, в зависимости от типа, который передается при конструировании уровня
@@ -257,7 +277,7 @@ def run(lives: int):
             status = "dead"
             break
 
-    return status
+    return status, score, count
 
 
 main_menu(screen=screen, run=run)
