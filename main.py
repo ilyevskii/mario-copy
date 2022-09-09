@@ -288,6 +288,18 @@ def run(lives: int):
         for e in entities:
             screen.blit(e.image, camera.apply(e))
 
+        COIN_TEXT = get_font(20).render(f"COIN COUNT: {count}", True, "Yellow")
+        COIN_RECT = COIN_TEXT.get_rect(center=(1090, 50))
+        screen.blit(COIN_TEXT, COIN_RECT)
+
+        LIVES_TEXT = get_font(20).render(f"LIVES: {mario.lives}", True, "Red")
+        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
+        screen.blit(LIVES_TEXT, LIVES_RECT)
+
+        LIVES_TEXT = get_font(20).render(f"SCORE: {score}", True, "Black")
+        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 130))
+        screen.blit(LIVES_TEXT, LIVES_RECT)
+
         pygame.display.update()
         animatedEntities.update()
         timer.tick(60)
