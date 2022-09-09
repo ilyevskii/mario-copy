@@ -212,11 +212,20 @@ def main_menu(screen, run):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    params = run(5)
-                    if params[0] == 'dead':
-                        game_over(screen, run, score=params[1], coins=params[2])
-                    elif params[0] == 'win':
-                        win(screen, run, score=params[1], coins=params[2])
+
+                    params = run()
+                    while params[0] != 'dead':
+
+                        if params[0] == 'win':
+                            win(screen, run, score=params[1], coins=params[2])
+                        elif params[0] == 'lvl1':
+                            params = run(params[3], params[2], params[1], 1)
+                        elif params[0] == "lvl2":
+                            params = run(params[3], params[2], params[1], 2)
+
+                    game_over(screen, run, score=params[1], coins=params[2])
+
+
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options(screen, run)
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):

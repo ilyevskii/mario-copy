@@ -164,7 +164,7 @@ def change_entities(entities, tmp_lst, lst):
 
 
 def run(lives: int):
-    mario = Mario(5120, 100)
+    mario = Mario(120, 580)
     mario.set_lives(lives)
     pygame.init()
     BG = pygame.image.load("images/background.png")

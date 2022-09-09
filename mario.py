@@ -11,6 +11,7 @@ JUMP_POWER = 11
 GRAVITY = 0.35
 ANIMATION_DELAY = 55
 COLOR = (0, 0, 0)
+i = 0
 
 LEFT_POSE = image.load("images/marioLeft.png")
 RIGHT_MOVE_ANIMATION = [("images/marioRight_0.png"), ("images/marioRight_1.png"),
@@ -26,7 +27,7 @@ JUMP_RIGHT_ANIMATION = [('images/marioJumpRight.png', ANIMATION_DELAY)]
 
 class Mario(sprite.Sprite):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, coins = 0, lives = 5):
         # Инициализация главного персонажа
         super().__init__()
 
@@ -36,10 +37,11 @@ class Mario(sprite.Sprite):
         self.onTube = False
         self.x_speed = 0
         self.y_speed = 0
-        self.coins = 0
-        self.lives = 5
+        self.coins = coins
+        self.lives = lives
 
         self.image.set_colorkey(Color(COLOR))
+
         # Анимация движения вправо
         boltAnim = []
         for anim in RIGHT_MOVE_ANIMATION:
@@ -51,9 +53,9 @@ class Mario(sprite.Sprite):
         boltAnim = []
         for anim in LEFT_MOVE_ANIMATION:
             boltAnim.append((anim, ANIMATION_DELAY))
-
         self.boltAnimLeft = pyganim.PygAnimation(boltAnim)
         self.boltAnimLeft.play()
+
 
         self.boltAnimStay = pyganim.PygAnimation(STAY_ANIMATION)
         self.boltAnimStay.play()
@@ -112,6 +114,7 @@ class Mario(sprite.Sprite):
                 jump_sound.play(0)
                 self.y_speed -= JUMP_POWER
                 self.onGround = False
+
 
         if not self.onGround:
             self.y_speed += GRAVITY
@@ -176,7 +179,7 @@ class Mario(sprite.Sprite):
 
             if sprite.collide_rect(self, mob):
 
-                if not self.onGround and self.rect.bottom <= mob.rect.top + 10:
+                if not self.onGround and self.rect.bottom <= mob.rect.top + 20:
                     mob.is_alive = False
                     mob.rect.height = 15
                     self.y_speed = -8

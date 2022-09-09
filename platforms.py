@@ -124,7 +124,7 @@ def get_sprites(coordinates, type):
         # По умолчанию отрисовывается один блок по вертикали. Но если coordinates - это список обычных кирпичных блоков,
         # там значения количества рисуемых блоков и направление отрисовки могут быть иными. Поэтому достаем amount
         # и direction из списка
-        if type == "flour" or type == "simple":
+        if type == "flour" or type == "simple" or type == "stair":
             direction = line[3]
             amount = line[2]
         for i in range(amount):
