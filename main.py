@@ -172,8 +172,7 @@ def change_entities(entities, tmp_lst, lst):
 
 
 def run(lives: int, lvl: int):
-    mario = Mario(120, 600)
-    mario.set_lives(lives)
+
     pygame.init()
     BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
@@ -181,7 +180,15 @@ def run(lives: int, lvl: int):
     SCORE = 0
 
     # Создаем списки соответствующих спрайтов и мобов
-    if lvl == 0:
+    if lvl == 0 or lvl == 2:
+        if lvl == 0:
+            mario = Mario(120, 600)
+        else:
+            mario = Mario(1240, 540)
+            sewer_coordinates.remove([1240, 540, "lvl1", "tube_1"])
+            sewer_coordinates.append([1240, 540, "none", "tube_1"],)
+
+        mario.set_lives(lives)
         platforms = get_sprites(platforms_coordinates, "simple")
         flours = get_sprites(flour_coordinates, "flour")
         special_platforms = get_sprites(special_blocks_coordinates, "special")
@@ -190,6 +197,7 @@ def run(lives: int, lvl: int):
         sewers = get_sprites(sewer_coordinates, "sewer")
         stairs = get_sprites(stairs_coordinate, "stair")
     elif lvl == 1:
+        mario = Mario(120, 600)
         platforms = []
         flours = get_sprites(flour_coordinates_lvl1, "flour")
         special_platforms = []
@@ -244,7 +252,7 @@ def run(lives: int, lvl: int):
             if mario.onTube:
                 tmp_status = get_status_from_sewer(mario.rect.centerx, sewers)
                 if tmp_status != "none":
-                    return status
+                    status = tmp_status
 
         if mario.update(events, platforms, coins, mobs, special_platforms, sewers, stairs, flours) is True:
             death_sound = pygame.mixer.Sound('music/death.wav')
