@@ -328,7 +328,7 @@ def run(lives=5, coins=0, points=0, lvl=0):
         COIN_RECT = COIN_TEXT.get_rect(center=(1090, 50))
         screen.blit(COIN_TEXT, COIN_RECT)
 
-        LIVES_TEXT = get_font(20).render(f"LIVES: {mario.lives}", True, "Black")
+        LIVES_TEXT = get_font(20).render(f"LIVES: {mario.lives}", True, "Red")
         LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
