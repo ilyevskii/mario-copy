@@ -2,6 +2,8 @@ from pygame import *
 import pygame
 import sys
 
+from time import sleep
+
 
 left = right = up = down = False
 
