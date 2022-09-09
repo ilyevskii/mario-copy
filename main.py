@@ -185,7 +185,7 @@ def change_entities(entities, tmp_lst, lst):
             entities.remove(i)
 
 
-def run(lives: int, lvl: int):
+def run(lives=5, coins=0, points=0, lvl=0):
 
     pygame.init()
     BG = pygame.image.load("images/background.png")
@@ -196,13 +196,13 @@ def run(lives: int, lvl: int):
     # Создаем списки соответствующих спрайтов и мобов
     if lvl == 0 or lvl == 2:
         if lvl == 0:
-            mario = Mario(120, 600)
+            mario = Mario(120, 600, coins, lives)
         else:
-            mario = Mario(1240, 540)
+            mario = Mario(1240, 540, coins, lives)
+            print(mario.lives)
             sewer_coordinates.remove([1240, 540, "lvl1", "tube_1"])
             sewer_coordinates.append([1240, 540, "none", "tube_1"],)
 
-        mario.set_lives(lives)
         platforms = get_sprites(platforms_coordinates, "simple")
         flours = get_sprites(flour_coordinates, "flour")
         special_platforms = get_sprites(special_blocks_coordinates, "special")
@@ -210,8 +210,9 @@ def run(lives: int, lvl: int):
         mobs = get_sprites(mobs_coordinates, "mobs")
         sewers = get_sprites(sewer_coordinates, "sewer")
         stairs = get_sprites(stairs_coordinate, "stair")
-    elif lvl == 1:
-        mario = Mario(120, 600)
+    else:
+        mario = Mario(120, 600, coins, lives)
+        print(mario.lives)
         platforms = []
         flours = get_sprites(flour_coordinates_lvl1, "flour")
         special_platforms = []
@@ -242,10 +243,9 @@ def run(lives: int, lvl: int):
     pygame.mixer.music.load('music/play_background_music.mp3')
     pygame.mixer.music.play(-1)
 
-    count = 0
-
+    count = mario.coins
     max_coordinate = 0
-    score = 0
+    score = points
 
     while status == "Running":
 
@@ -340,13 +340,12 @@ def run(lives: int, lvl: int):
         timer.tick(60)
 
 
-
         # Если жизней нет, очищаем все текстуры. Нужен переход в главное меню
         if int(mario.lives) == 0:
             status = "dead"
             break
 
-    return status, score, count
+    return status, score, count, mario.lives
 
 
 main_menu(screen=screen, run=run)
