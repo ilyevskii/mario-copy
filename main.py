@@ -88,8 +88,28 @@ coins_coordinates = [
     [2790, 480],
     [3250, 480],
     [4100, 580],
-    [4200, 480],
+    [4200, 580],
     [4300, 580],
+    [4600, 480],
+    [2450, 580],
+    [3080, 420],
+    [3250, 200],
+    [3300, 200],
+    [3350, 200],
+    [3400, 200],
+    [3700, 260],
+    [4030, 420],
+    [4850, 260],
+    [4900, 260],
+    [5500, 580],
+    [5500, 530],
+    [5500, 480],
+    [6100, 580],
+    [6100, 530],
+    [6100, 480],
+    [6680, 580],
+    [7000, 580],
+    [7470, 100]
 ]
 
 
@@ -144,7 +164,7 @@ def change_entities(entities, tmp_lst, lst):
 
 
 def run(lives: int):
-    mario = Mario(120, 600)
+    mario = Mario(5120, 100)
     mario.set_lives(lives)
     pygame.init()
     BG = pygame.image.load("images/background.png")
@@ -234,8 +254,8 @@ def run(lives: int):
         LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
-        LIVES_TEXT = get_font(20).render(f"SCORE: {score}", True, "Black")
-        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 130))
+        LIVES_TEXT = get_font(20).render(f"SCORE: {mario.rect.x}  {mario.rect.y}", True, "Black")
+        LIVES_RECT = LIVES_TEXT.get_rect(center=(800, 130))
         screen.blit(LIVES_TEXT, LIVES_RECT)
 
         if mario.rect.x > 7700:
