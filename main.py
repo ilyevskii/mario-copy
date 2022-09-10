@@ -218,7 +218,7 @@ def run(lives=5, coins=0, points=0, lvl=0):
     # Создаем списки соответствующих спрайтов и мобов
     if lvl == 0 or lvl == 2:
         if lvl == 0:
-            mario = Mario(6500, 600, coins, lives)
+            mario = Mario(120, 600, coins, lives)
         else:
             mario = Mario(1240, 540, coins, lives)
             sewer_coordinates.remove([1240, 540, "lvl1", "tube_1"])
@@ -233,7 +233,7 @@ def run(lives=5, coins=0, points=0, lvl=0):
         stairs = get_sprites(stairs_coordinate, "stair")
         castle = Castle(7650, 340)
     else:
-        mario = Mario(6500, 600, coins, lives)
+        mario = Mario(120, 600, coins, lives)
         print(mario.lives)
         platforms = []
         flours = get_sprites(flour_coordinates_lvl1, "flour")
