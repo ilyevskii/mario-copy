@@ -49,30 +49,30 @@ platforms_coordinates = [
 
 ]
 stairs_coordinate = [
-    [5320, 600], [5360, 600], [5400, 600], [5440, 600],
-    [5360, 560], [5400, 560], [5440, 560],
-    [5400, 520], [5440, 520],
-    [5440, 480],
-    [5560, 600], [5600, 600], [5640, 600], [5680, 600],
-    [5560, 560], [5600, 560], [5640, 560],
-    [5560, 520], [5600, 520],
-    [5560, 480],
-    [5880, 600], [5920, 600], [5960, 600], [6000, 600], [6040, 600],
-    [5920, 560], [5960, 560], [6000, 560], [6040, 560],
-    [5960, 520], [6000, 520], [6040, 520],
-    [6000, 480], [6040, 480],
-    [6160, 600], [6200, 600], [6240, 600], [6280, 600],
-    [6160, 560], [6200, 560], [6240, 560],
-    [6160, 520], [6200, 520],
-    [6160, 480],
-    [7160, 600], [7200, 600], [7240, 600], [7280, 600], [7320, 600], [7360, 600], [7400, 600], [7440, 600], [7480, 600],
-    [7200, 560], [7240, 560], [7280, 560], [7320, 560], [7360, 560], [7400, 560], [7440, 560], [7480, 560],
-    [7240, 520], [7280, 520], [7320, 520], [7360, 520], [7400, 520], [7440, 520], [7480, 520],
-    [7280, 480], [7320, 480], [7360, 480], [7400, 480], [7440, 480], [7480, 480],
-    [7320, 440], [7360, 440], [7400, 440], [7440, 440], [7480, 440],
-    [7360, 400], [7400, 400], [7440, 400], [7480, 400],
-    [7400, 360], [7440, 360], [7480, 360],
-    [7440, 320], [7480, 320],
+    [5320, 600, 4, "hor"],
+    [5360, 560, 3, "hor"],
+    [5400, 520, 2, "hor"],
+    [5440, 480, 1, "hor"],
+    [5560, 600, 4, "hor"],
+    [5560, 560, 3, "hor"],
+    [5560, 520, 2, "hor"],
+    [5560, 480, 1, "hor"],
+    [5880, 600, 5, "hor"],
+    [5920, 560, 4, "hor"],
+    [5960, 520, 3, "hor"],
+    [6000, 480, 2, "hor"],
+    [6160, 600, 4, "hor"],
+    [6160, 560, 3, "hor"],
+    [6160, 520, 2, "hor"],
+    [6160, 480, 1, "hor"],
+    [7160, 600, 9, "hor"],
+    [7200, 560, 8, "hor"],
+    [7240, 520, 7, "hor"],
+    [7280, 480, 6, "hor"],
+    [7320, 440, 5, "hor"],
+    [7360, 400, 4, "hor"],
+    [7400, 360, 3, "hor"],
+    [7440, 320, 2, "hor"],
 
 ]
 
@@ -88,6 +88,7 @@ coins_coordinates = [
     [2790, 480],
     [3250, 480],
     [4100, 580],
+    [4200, 480],
     [4200, 580],
     [4300, 580],
     [4600, 480],
@@ -113,6 +114,7 @@ coins_coordinates = [
 ]
 
 
+
 special_blocks_coordinates = [
     # x, y, тип объекта, который появится (mob или coin)
     [640, 480, "coin"],
@@ -128,9 +130,51 @@ special_blocks_coordinates = [
     [5160, 320, "coin"],
 ]
 
+flour_coordinates_lvl1 = [
+    [0, 640, 32, "hor"],
+    [0, 680, 32, "hor"],
+    [0, 0, 30, "ver"],
+    [40, 0, 30, "ver"],
+    [1200, 0, 32, "ver"],
+    [1240, 0, 32, "ver"],
+    [0, 0, 32, "hor"],
+    [0, 40, 32, "hor"],
+]
+
+sewer_coordinates_lvl1 = [
+    # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
+    [130, 540, "none", "tube_1"],
+    [1050, 540, "lvl2", "tube_1"],
+]
+
+stairs_coordinate_lvl1 = [
+    [300, 560, 2, "ver"],
+    [450, 480, 4, "ver"],
+    [600, 400, 6, "ver"],
+    [750, 480, 4, "ver"],
+    [900, 560, 2, "ver"],
+]
+
+coins_coordinates_lvl1 = [
+    [345, 590], [395, 590], [370, 545],
+    [495, 590], [545, 590], [495, 545], [545, 545], [495, 500], [545, 500], [520, 455],
+    [645, 590], [695, 590], [645, 545], [695, 545], [645, 500], [695, 500], [670, 455],
+    [795, 590], [845, 590], [820, 545],
+]
+
+mobs_coordinates_lvl1 = [
+    # x, y - координаты моба
+    [345, 590],
+    [495, 590],
+    [645, 590],
+    [795, 590],
+]
+
+
+
 sewer_coordinates = [
     # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
-    [1240, 540, "none", "tube_1"], [1520, 500, "lvl1", "tube_2"],
+    [1240, 540, "lvl1", "tube_1"], [1520, 500, "none", "tube_2"],
     [6520, 540, "none", "tube_1"], [2120, 460, "none", "tube_3"], [1800, 460, "none", "tube_3"],
 ]
 # [2120, 460, "none", "tube_3"], [1800, 460, "none", "tube_3"],
@@ -163,9 +207,8 @@ def change_entities(entities, tmp_lst, lst):
             entities.remove(i)
 
 
-def run(lives: int):
-    mario = Mario(120, 580)
-    mario.set_lives(lives)
+def run(lives=5, coins=0, points=0, lvl=0):
+
     pygame.init()
     BG = pygame.image.load("images/background.png")
     pygame.display.set_caption("Anti Mario")
@@ -173,13 +216,32 @@ def run(lives: int):
     SCORE = 0
 
     # Создаем списки соответствующих спрайтов и мобов
-    platforms = get_sprites(platforms_coordinates, "simple")
-    flours = get_sprites(flour_coordinates, "flour")
-    special_platforms = get_sprites(special_blocks_coordinates, "special")
-    coins = get_sprites(coins_coordinates, "coins")
-    mobs = get_sprites(mobs_coordinates, "mobs")
-    sewers = get_sprites(sewer_coordinates, "sewer")
-    stairs = get_sprites(stairs_coordinate, "stair")
+    if lvl == 0 or lvl == 2:
+        if lvl == 0:
+            mario = Mario(120, 600, coins, lives)
+        else:
+            mario = Mario(1240, 540, coins, lives)
+            print(mario.lives)
+            sewer_coordinates.remove([1240, 540, "lvl1", "tube_1"])
+            sewer_coordinates.append([1240, 540, "none", "tube_1"],)
+
+        platforms = get_sprites(platforms_coordinates, "simple")
+        flours = get_sprites(flour_coordinates, "flour")
+        special_platforms = get_sprites(special_blocks_coordinates, "special")
+        coins = get_sprites(coins_coordinates, "coins")
+        mobs = get_sprites(mobs_coordinates, "mobs")
+        sewers = get_sprites(sewer_coordinates, "sewer")
+        stairs = get_sprites(stairs_coordinate, "stair")
+    else:
+        mario = Mario(120, 600, coins, lives)
+        print(mario.lives)
+        platforms = []
+        flours = get_sprites(flour_coordinates_lvl1, "flour")
+        special_platforms = []
+        coins = get_sprites(coins_coordinates_lvl1, "coins")
+        mobs = get_sprites(mobs_coordinates_lvl1, "mobs")
+        sewers = get_sprites(sewer_coordinates_lvl1, "sewer")
+        stairs = get_sprites(stairs_coordinate_lvl1, "stair")
 
     # Создаем одну большую группу спрайтов для общей отрисовки
     entities = pygame.sprite.Group()
@@ -188,19 +250,24 @@ def run(lives: int):
     animatedEntities.add(coins, special_platforms)
 
     # Создание камеры
-    total_level_width = BG_WIDTH ** 2 / 40
-    total_level_height = BG_HEIGHT ** 2 / 40
+
+    if lvl == 0:
+        total_level_width = BG_WIDTH ** 2 / 40
+        total_level_height = BG_HEIGHT ** 2 / 40
+    else:
+        total_level_width = BG_WIDTH / 10
+        total_level_height = BG_HEIGHT
 
     camera = Camera(camera_configure, total_level_width, total_level_height)
+
     status = "Running"
 
     pygame.mixer.music.load('music/play_background_music.mp3')
     pygame.mixer.music.play(-1)
 
-    count = 0
-
+    count = mario.coins
     max_coordinate = 0
-    score = 0
+    score = points
 
     while status == "Running":
 
@@ -246,18 +313,6 @@ def run(lives: int):
             change_entities(entities, tmp_mobs, mobs)
             score += 25
 
-        COIN_TEXT = get_font(20).render(f"COIN COUNT: {count}", True, "Yellow")
-        COIN_RECT = COIN_TEXT.get_rect(center=(1090, 50))
-        screen.blit(COIN_TEXT, COIN_RECT)
-
-        LIVES_TEXT = get_font(20).render(f"LIVES: {mario.lives}", True, "Black")
-        LIVES_RECT = LIVES_TEXT.get_rect(center=(1140, 90))
-        screen.blit(LIVES_TEXT, LIVES_RECT)
-
-        LIVES_TEXT = get_font(20).render(f"SCORE: {mario.rect.x}  {mario.rect.y}", True, "Black")
-        LIVES_RECT = LIVES_TEXT.get_rect(center=(800, 130))
-        screen.blit(LIVES_TEXT, LIVES_RECT)
-
         if mario.rect.x > 7700:
             status = 'win'
             break
@@ -284,6 +339,7 @@ def run(lives: int):
             entities.add(block, mob)
             change_entities(entities, tmp_spec_platforms, special_platforms)
 
+
         camera.update(mario)
         for e in entities:
             screen.blit(e.image, camera.apply(e))
@@ -309,7 +365,7 @@ def run(lives: int):
             status = "dead"
             break
 
-    return status, score, count
+    return status, score, count, mario.lives
 
 
 main_menu(screen=screen, run=run)

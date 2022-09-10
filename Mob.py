@@ -92,6 +92,7 @@ def get_collide(mob, block, x_speed, y_speed):
         mob.onGround = True
         mob.y_speed = 0
 
+
 def update_mobs(mobs, platforms, sewers, stairs, flours):
     #Обновляем список мобов
 

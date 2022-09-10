@@ -115,7 +115,6 @@ class Mario(sprite.Sprite):
                 self.y_speed -= JUMP_POWER
                 self.onGround = False
 
-
         if not self.onGround:
             self.y_speed += GRAVITY
 
