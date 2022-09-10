@@ -206,7 +206,7 @@ def change_entities(entities, tmp_lst, lst):
             entities.remove(i)
 
 
-def run(lives=1, coins=0, points=0, lvl=0):
+def run(lives=5, coins=0, points=0, lvl=0):
 
     pygame.init()
     BG = pygame.image.load("images/background.png")
