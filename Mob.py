@@ -13,6 +13,7 @@ COLOR = (90, 90, 90)
 MOB_ANIMATION  = [("images/mobLeft.png"), ("images/mobRight.png")]
 MOB_DEAD_ANIMATION = [("images/mobDead.png", ANIMATION_DELAY)]
 
+
 class Mob(sprite.Sprite):
 
     def __init__(self, x, y):

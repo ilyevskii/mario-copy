@@ -44,7 +44,6 @@ def check_for_events(pause, screen, run):
             if event.key == K_s or event.key == K_DOWN:
                 down = False
 
-
     #Возвращаем переменные, отвечающие за направление движения или его отсутствие
     return [left, right, up, down]
 

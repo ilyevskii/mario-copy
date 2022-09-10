@@ -6,6 +6,7 @@ from platforms import get_sprites, Platform, get_needed_platform, Coin, get_stat
 from Mob import update_mobs, Mob
 from camera import Camera, camera_configure
 from menu import *
+from castle import *
 
 import random
 
@@ -25,8 +26,8 @@ flour_coordinates = [
     [0, 680, 69, "hor"],
     [2840, 640, 16, "hor"],
     [2840, 680, 16, "hor"],
-    [3600, 640, 109, "hor"],
-    [3600, 680, 109, "hor"],
+    [3600, 640, 130, "hor"],
+    [3600, 680, 130, "hor"],
 ]
 platforms_coordinates = [
     #x, y, Количество блоков, направление отрисовки
@@ -217,10 +218,9 @@ def run(lives=5, coins=0, points=0, lvl=0):
     # Создаем списки соответствующих спрайтов и мобов
     if lvl == 0 or lvl == 2:
         if lvl == 0:
-            mario = Mario(120, 600, coins, lives)
+            mario = Mario(6500, 600, coins, lives)
         else:
             mario = Mario(1240, 540, coins, lives)
-            print(mario.lives)
             sewer_coordinates.remove([1240, 540, "lvl1", "tube_1"])
             sewer_coordinates.append([1240, 540, "none", "tube_1"],)
 
@@ -231,8 +231,9 @@ def run(lives=5, coins=0, points=0, lvl=0):
         mobs = get_sprites(mobs_coordinates, "mobs")
         sewers = get_sprites(sewer_coordinates, "sewer")
         stairs = get_sprites(stairs_coordinate, "stair")
+        castle = Castle(7650, 340)
     else:
-        mario = Mario(120, 600, coins, lives)
+        mario = Mario(6500, 600, coins, lives)
         print(mario.lives)
         platforms = []
         flours = get_sprites(flour_coordinates_lvl1, "flour")
@@ -241,11 +242,12 @@ def run(lives=5, coins=0, points=0, lvl=0):
         mobs = get_sprites(mobs_coordinates_lvl1, "mobs")
         sewers = get_sprites(sewer_coordinates_lvl1, "sewer")
         stairs = get_sprites(stairs_coordinate_lvl1, "stair")
+        castle = Castle(7650, 340)
 
     # Создаем одну большую группу спрайтов для общей отрисовки
     entities = pygame.sprite.Group()
     animatedEntities = pygame.sprite.Group()
-    entities.add(mario, platforms, mobs, coins, special_platforms, sewers, stairs, flours)
+    entities.add(mario, platforms, mobs, coins, special_platforms, sewers, stairs, flours, castle)
     animatedEntities.add(coins, special_platforms)
 
     # Создание камеры
@@ -312,7 +314,7 @@ def run(lives=5, coins=0, points=0, lvl=0):
             change_entities(entities, tmp_mobs, mobs)
             score += 25
 
-        if mario.rect.x > 7700:
+        if mario.rect.x > 7750:
             status = 'win'
             break
 
