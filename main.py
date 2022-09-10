@@ -171,7 +171,6 @@ mobs_coordinates_lvl1 = [
 ]
 
 
-
 sewer_coordinates = [
     # x, y, номер скрытого уровня в формате "lvl1", "lvl2" (если в трубу нельзя войти - "none")
     [1240, 540, "lvl1", "tube_1"], [1520, 500, "none", "tube_2"],
@@ -207,7 +206,7 @@ def change_entities(entities, tmp_lst, lst):
             entities.remove(i)
 
 
-def run(lives=5, coins=0, points=0, lvl=0):
+def run(lives=1, coins=0, points=0, lvl=0):
 
     pygame.init()
     BG = pygame.image.load("images/background.png")

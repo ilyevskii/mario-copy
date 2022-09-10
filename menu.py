@@ -28,11 +28,17 @@ def game_over(screen, run, score: int, coins: int):
         COIN_RECT = COIN_TEXT.get_rect(center=(660, 360))
         screen.blit(COIN_TEXT, COIN_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 520),
+        TRY_AGAIN = Button(image=None, pos=(640, 500),
+                            text_input="TRY AGAIN", font=get_font(75), base_color="White", hovering_color="Green")
+
+        PLAY_BACK = Button(image=None, pos=(640, 620),
                             text_input="GO TO MENU", font=get_font(75), base_color="White", hovering_color="Orange")
 
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(screen)
+
+        TRY_AGAIN.changeColor(PLAY_MOUSE_POS)
+        TRY_AGAIN.update(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -43,6 +49,8 @@ def game_over(screen, run, score: int, coins: int):
                     pygame.mixer.music.set_volume(1)
                     pygame.mixer.music.load('music/menu_background_music.mp3')
                     main_menu(screen, run)
+                elif TRY_AGAIN.checkForInput(PLAY_MOUSE_POS):
+                    run()
 
         pygame.display.update()
 
@@ -224,7 +232,6 @@ def main_menu(screen, run):
                             params = run(params[3], params[2], params[1], 2)
 
                     game_over(screen, run, score=params[1], coins=params[2])
-
 
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options(screen, run)
